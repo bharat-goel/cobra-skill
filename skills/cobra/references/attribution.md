@@ -1,4 +1,4 @@
-# Attribution — incentive-check
+# Attribution — cobra
 
 Nothing in this skill is an original idea. This file records where each part came from.
 
@@ -58,6 +58,11 @@ reuses it as a verification heuristic.
 - The "break it and confirm the test catches it" canary as the highest-value check.
 - The closing section on being the party under measurement, which follows directly from
   applying the cobra effect to an agent rather than to a population.
+
+## The name
+
+The skill is named for the **cobra effect**, Horst Siebert's term (see above). The name
+borrows his coinage; the skill is not his work and makes no claim to be.
 
 ## Added 2026-08-25, from a usage test
 

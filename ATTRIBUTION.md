@@ -1,5 +1,9 @@
 # Attribution
 
+The shipped skill is named **cobra**, after the cobra effect. The name borrows Horst
+Siebert's coinage; the skill is not his work and makes no claim to be. The retired
+`system-triage` skill and its sources are documented the same way in `retired/`.
+
 **No idea in this repository is original to it.** This file records who each part belongs to.
 Per-skill detail, including what this adaptation changed and why, lives in
 `skills/<name>/references/attribution.md`.

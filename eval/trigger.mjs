@@ -22,7 +22,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SANDBOX = mkdtempSync(join(tmpdir(), "trigger-eval-"));
-const OURS = ["system-triage", "incentive-check"];
+const OURS = ["system-triage", "cobra"];
 
 const arg = (n, d) => {
   const i = process.argv.indexOf(`--${n}`);

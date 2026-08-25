@@ -53,7 +53,7 @@ only way to catch it.
 ## Validating the judge
 
 A judge that passes everything produces a clean-looking null result. Before trusting one,
-check that it fails when it should — the same canary `incentive-check` prescribes.
+check that it fails when it should — the same canary `cobra` prescribes.
 
 The rubric judge was checked against three deliberately bad replies to `st-mixed-domains`,
 each matching a failure mode the rubric names: generic project-management advice, pure

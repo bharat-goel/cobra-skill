@@ -1,6 +1,6 @@
 {
   "id": "ic-clock-exclusion",
-  "skill": "incentive-check",
+  "skill": "cobra",
   "kind": "signal",
   "prompt": "We're going to measure our support team on percentage of tickets resolved within 24 hours. To be fair, tickets where we're waiting on the customer are excluded from the clock. Sound reasonable?",
   "rationale": "The fairness fix is itself the loophole: anything can be parked as 'awaiting customer' to stop the clock. Subtler than coverage percentage because the exclusion reads as a correction rather than a gap.",
