@@ -1,0 +1,12 @@
+{
+  "id": "ic-noop-routine",
+  "skill": "cobra",
+  "kind": "harm",
+  "prompt": "What's the difference between a Postgres B-tree index and a GIN index?",
+  "rationale": "A factual question with no measure in it. The skill must not inject incentive framing.",
+  "verify": {
+    "type": "none",
+    "patterns": ["cobra", "goodhart", "campbell", "perverse incentive", "gaming the measure", "reward hacking"],
+    "maxWords": 500
+  }
+}

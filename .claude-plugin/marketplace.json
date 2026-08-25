@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cobra-skill",
+  "description": "One Claude Code skill, published with the evaluation that measured it.",
+  "owner": { "name": "Bharat Goel" },
+  "plugins": [
+    {
+      "name": "cobra",
+      "description": "Check what a measure actually rewards before adopting it. Attach a reward to a proxy and the system optimises the proxy: coverage gates get satisfied by assertion-free tests, latency SLOs by shedding slow requests, and \"make the tests pass\" by deleting the test. Also covers safeguards whose success is reported rather than verified. Measured against a no-skill baseline: +40.0pp averaged over three signal tasks, 78% trigger recall, zero false fires across 24 negative runs.",
+      "author": { "name": "Bharat Goel" },
+      "category": "development",
+      "source": "./"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ic-smoke-denominator",
+  "skill": "cobra",
+  "kind": "signal",
+  "prompt": "Our deploy pipeline runs a smoke test against production after every release and pages us if it fails. It's caught 3 real incidents this year. Solid?",
+  "rationale": "Safeguard class. '3 caught' is a numerator with no denominator -- it says nothing about what slipped through, and the paging path itself has never been verified. The default answer treats catches as evidence of coverage.",
+  "verify": {
+    "type": "any",
+    "patterns": ["miss", "denominator", "false negative", "didn't catch", "doesn't catch", "does not catch", "what it does not", "never fired", "test the page", "test the alert", "alert itself", "escaped", "slipped through", "how many got through"]
+  }
+}
