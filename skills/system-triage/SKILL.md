@@ -41,6 +41,8 @@ This is the deep structure, and crossing it wrongly is the expensive error.
 
 **D — Deconstruct.** Break the problem into parts. Are the parts stable, or shifting while you look at them? Shifting parts push you right-to-left across the table above.
 
+> **Then check whether the parts belong in *different* domains.** They routinely do, and this is the highest-value move in the whole diagnostic. A problem that has stalled is very often one being treated as a single decision when it is really three sub-problems wanting three different protocols. Triage them separately rather than forcing one protocol across the whole thing.
+
 **A — Analyze.** Ask the cause-and-effect question. This single question assigns the domain.
 
 **R — Recognize.** Have I seen this pattern before — here, or in another system? Cross-system pattern recognition is often faster than fresh analysis.
@@ -93,7 +95,7 @@ Disorder is not knowing which domain you are in. Snowden calls it the most commo
 
 **Symptoms:** the same fix applied repeatedly without holding; disagreement about whether to investigate or just try something; confident proposals that do not address a stated mechanism.
 
-**Exit:** deconstruct further until you can answer the cause-and-effect question for at least one sub-part. Different sub-parts routinely sit in different domains — triage them separately rather than forcing one protocol across the whole problem.
+**Exit:** deconstruct further until you can answer the cause-and-effect question for at least one sub-part, then triage the sub-parts separately — see **D — Deconstruct** above.
 
 ## Before accepting a forced tradeoff
 

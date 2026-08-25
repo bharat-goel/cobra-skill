@@ -86,3 +86,10 @@ Recorded so the differences from both sources are visible:
 
 7. **Dropped the motivational and biographical material** — it does not belong in a skill.
    It is preserved in the companion write-up instead.
+
+8. **Promoted sub-part triage into the Deconstruct step.** Decomposing a problem and finding its
+   parts in different domains is standard Cynefin practice, not new. What is this adaptation's
+   own is the *placement and emphasis*: it was originally a closing line in the disorder section
+   and was moved into DART's first step after a usage test showed it was the move that actually
+   resolved a stalled decision. Recorded because the change was driven by evidence rather than
+   by either source.
