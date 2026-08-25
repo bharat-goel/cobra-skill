@@ -86,7 +86,7 @@ Almost no skills repository publishes evidence that its skills help. Writing a c
 | **Trigger recall** | **78%** (14/18) | Does the description actually fire on prompts it targets? |
 | **False fires** | **0/24** | Never loads on unrelated work |
 
-Content and triggering are measured separately, because they fail separately: a skill can give excellent advice and never activate, or activate constantly and add nothing. Full method, tasks, and limits in [`eval/`](eval/).
+Content and triggering are measured separately, because they fail separately: a skill can give excellent advice and never activate, or activate constantly and add nothing. Numbers in [`eval/RESULTS.md`](eval/RESULTS.md); method, tasks and limits in [`eval/`](eval/).
 
 Three defects were found and fixed while building the harness, each caught only by reading raw transcripts rather than trusting the numbers:
 

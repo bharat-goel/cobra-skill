@@ -23,8 +23,8 @@ node eval/run.mjs --task ic-coverage-gate --reps 5
 node eval/run.mjs --skill cobra
 ```
 
-Results land in `eval/results/<timestamp>/` — `report.md`, `summary.json`, and the raw
-reply for every run in `raw/`. Raw replies are gitignored; the reports are committed.
+Runs write to `eval/results/`, which is not tracked. The committed summary of the latest run
+is [RESULTS.md](RESULTS.md).
 
 ## Task kinds
 

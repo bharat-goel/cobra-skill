@@ -64,7 +64,7 @@ reuses it as a verification heuristic.
 The skill is named for the **cobra effect**, Horst Siebert's term (see above). The name
 borrows his coinage; the skill is not his work and makes no claim to be.
 
-## Added 2026-08-25, from a usage test
+## Added from a usage test
 
 The **"Safeguards are the worst case"** section, the safeguard row in the gaming table, and the
 widened trigger came from exercising this skill against a real backup/restore pair. The audit
