@@ -1,0 +1,27 @@
+{
+  "note": "Phrasings are deliberately written the way a user would ask, not lifted from the skills' description fields. Reusing description wording would make the test circular.",
+  "prompts": [
+    { "expect": "incentive-check", "text": "I'm adding a CI gate that fails the build if test coverage drops below 80%. Any concerns?" },
+    { "expect": "incentive-check", "text": "We're setting a team SLO of p50 API latency under 200ms. Sound good?" },
+    { "expect": "incentive-check", "text": "Our nightly backup script prints 'Backup OK' and it's been green for six months. Is that enough?" },
+    { "expect": "incentive-check", "text": "I want to pay the support team a quarterly bonus based on tickets closed per week." },
+    { "expect": "incentive-check", "text": "Let's auto-reject any PR whose diff coverage is under 80%." },
+    { "expect": "incentive-check", "text": "How should we measure whether the new onboarding flow is actually working?" },
+
+    { "expect": "system-triage", "text": "Production is down after a deploy, errors are climbing and we don't know why. What do we do first?" },
+    { "expect": "system-triage", "text": "We're three weeks late. The API is flaky under load, design keeps changing the checkout flow, and our payment sandbox is down. How do we get back on track?" },
+    { "expect": "system-triage", "text": "I've tried four different fixes for this bug and none of them stuck. What now?" },
+    { "expect": "system-triage", "text": "We need to migrate 50,000 users to a new auth provider and behaviour varies with each user's config. Plan it." },
+    { "expect": "system-triage", "text": "Should we rewrite this service from scratch or refactor it incrementally?" },
+    { "expect": "system-triage", "text": "The same test keeps failing intermittently and every fix we try doesn't hold." },
+
+    { "expect": null, "text": "What's the difference between a B-tree index and a GIN index in Postgres?" },
+    { "expect": null, "text": "Rename the variable `usr` to `user` in src/auth.ts." },
+    { "expect": null, "text": "Write a regex that matches an ISO 8601 date." },
+    { "expect": null, "text": "What does `git rebase -i` actually do?" },
+    { "expect": null, "text": "Add a loading spinner to this React button component." },
+    { "expect": null, "text": "Convert this JSON file to CSV." },
+    { "expect": null, "text": "Explain how TCP slow start works." },
+    { "expect": null, "text": "What's the syntax for a Python list comprehension with a conditional?" }
+  ]
+}
