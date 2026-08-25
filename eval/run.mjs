@@ -17,7 +17,7 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, cpSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -112,7 +112,17 @@ function verify(spec, output) {
 
 // ---- runner ----------------------------------------------------------------
 
-function runClaude(prompt, skillFile) {
+// A task may declare a fixture: a small project copied fresh for every run, so a
+// run that edits files cannot contaminate the next one. Tasks without a fixture
+// share one empty directory. Both live outside the repo.
+function makeCwd(task) {
+  if (!task.fixture) return SANDBOX;
+  const dir = mkdtempSync(join(tmpdir(), "skill-eval-fx-"));
+  cpSync(join(HERE, "fixtures", task.fixture), dir, { recursive: true });
+  return dir;
+}
+
+function runClaude(prompt, skillFile, cwd) {
   const args = ["-p", "--setting-sources", "project", "--model", MODEL];
   if (skillFile) args.push("--append-system-prompt-file", skillFile);
   args.push(prompt);
@@ -121,7 +131,7 @@ function runClaude(prompt, skillFile) {
     // control arm read the skills off disk and inherit the parent CLAUDE.md that
     // describes them -- control replies came back using the skill's own vocabulary,
     // which silently collapsed every measured delta toward zero.
-    const p = spawn("claude", args, { cwd: SANDBOX });
+    const p = spawn("claude", args, { cwd });
     let out = "", err = "";
     p.stdout.on("data", (d) => (out += d));
     p.stderr.on("data", (d) => (err += d));
@@ -154,7 +164,9 @@ async function worker(queue) {
   while (queue.length) {
     const { t, cond, rep } = queue.shift();
     const skillFile = cond === "treatment" ? join(ROOT, "skills", t.skill, "SKILL.md") : null;
-    const { out, err, code } = await runClaude(t.prompt, skillFile);
+    const cwd = makeCwd(t);
+    const { out, err, code } = await runClaude(t.prompt, skillFile, cwd);
+    if (cwd !== SANDBOX) rmSync(cwd, { recursive: true, force: true });
     const name = `${t.id}__${cond}__${rep}`;
     writeFileSync(join(OUT, "raw", `${name}.txt`), out || `<<no output>>\n${err}`);
     const v = code === 0 && out ? verify(t.verify, out) : { pass: false, why: `run failed (exit ${code})` };
