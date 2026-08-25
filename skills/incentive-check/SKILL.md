@@ -1,6 +1,6 @@
 ---
 name: incentive-check
-description: "Check what a measure actually rewards before adopting it, and whether it can be satisfied without achieving the goal. Use when defining or changing a test, eval, benchmark, acceptance criterion, coverage target, KPI, SLO, alert threshold, rate limit, quota, lint rule, agent success condition, or any rule that rewards a measured outcome. Also use when a metric is improving but the underlying goal is not, when a test suite is green but behavior is wrong, or when deciding how to verify that work is actually done."
+description: "Check what a measure actually rewards before adopting it, and whether it can be satisfied without achieving the goal. Use when defining or changing a test, eval, benchmark, acceptance criterion, coverage target, KPI, SLO, alert threshold, rate limit, quota, lint rule, agent success condition, or any rule that rewards a measured outcome. Also use when writing or reviewing a safeguard whose success is reported rather than verified — a backup, restore, rollback, retention/prune policy, health check, or dry-run path. Also when a metric is improving but the underlying goal is not, when a test suite is green but behavior is wrong, or when deciding how to verify that work is actually done."
 metadata:
   version: "0.1.0"
   adapted-from: "Sandeep Swadia, 'How To Think SO Clearly People Assume You're Brilliant' (YouTube, 2026)"
@@ -34,6 +34,7 @@ Name the cheapest path explicitly. If it is cheap and undetectable, the measure 
 | Lines of code / velocity | Churn — write more code to do the same thing |
 | "No failing builds" | Retry until green; mark flaky tests as skipped |
 | Response length or thoroughness | Padding, restated caveats, filler structure |
+| "The backup ran" — any safeguard | A snapshot nothing has ever restored from; a stash that failed silently; a pruner that deletes what it just wrote |
 
 If you catch yourself reaching for one of these, that is the cobra effect operating on you in real time. Say so rather than doing it quietly.
 
@@ -59,6 +60,21 @@ Pick one cheap, hard-to-fake detail that correlates with the whole job being don
 - Does the new test actually **fail** when you break the behavior it claims to cover? This is the single highest-value canary in software, and it is nearly impossible to fake accidentally.
 - Do the small conventions hold — naming, error handling, import order? If those slipped, the larger contract was probably not read either.
 - Does the change include the unglamorous parts — the migration, the changeset, the docs, the rollback path?
+
+### Safeguards are the worst case
+
+A backup, a rollback path, a health check, a circuit breaker, a dry-run flag — these are measures
+too, and the hardest kind. The reading is binary (*it ran*), the reward is immediate (*a success
+line*), and the damage is maximally deferred: you find out at the one moment you cannot afford to.
+
+**Exercise the mechanism; do not inspect it.** Reading a safeguard tells you what it intends.
+Running it against a case it is supposed to catch tells you what it does. For anything protecting
+data you cannot re-derive, restore into a scratch location and diff — *a snapshot nothing has ever
+restored from is a hypothesis, not a backup.*
+
+Watch especially for a safeguard that **shares state with the thing it protects** — same directory,
+same naming scheme, same sort order. That is where a safety mechanism quietly begins consuming what
+it was built to preserve, while still reporting success.
 
 ## Designing a measure that survives contact
 

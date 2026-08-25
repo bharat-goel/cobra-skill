@@ -58,3 +58,16 @@ reuses it as a verification heuristic.
 - The "break it and confirm the test catches it" canary as the highest-value check.
 - The closing section on being the party under measurement, which follows directly from
   applying the cobra effect to an agent rather than to a population.
+
+## Added 2026-08-25, from a usage test
+
+The **"Safeguards are the worst case"** section, the safeguard row in the gaming table, and the
+widened trigger came from exercising this skill against a real backup/restore pair. The audit
+found three defects, the decisive one visible only by *running* the scripts rather than reading
+them — a stash directory that shared a namespace and sort order with the backups it sat beside,
+so the pruner deleted every real backup while reporting success.
+
+Neither source covers safeguards as a measure class. Siebert, Goodhart and Campbell concern
+metrics that get optimized; a safeguard is a binary that gets *reported*. The extension is this
+adaptation's, and it is recorded here because it was driven by evidence rather than by either
+source. The underlying structure — reward attached to a proxy for the goal — is unchanged.

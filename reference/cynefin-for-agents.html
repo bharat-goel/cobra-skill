@@ -246,7 +246,7 @@
       <article class="skill">
         <p class="skill-name">incentive-check</p>
         <dl>
-          <div><dt>Fires when</dt><dd>Defining or changing a test, eval, benchmark, coverage target, KPI, alert threshold, lint rule, or agent success condition.</dd></div>
+          <div><dt>Fires when</dt><dd>Defining or changing a test, eval, benchmark, coverage target, KPI, alert threshold, lint rule, or agent success condition — or a safeguard whose success is reported rather than verified: a backup, restore, rollback, or prune policy.</dd></div>
           <div><dt>Also when</dt><dd>A metric is improving but the goal is not — a green suite over wrong behavior.</dd></div>
           <div><dt>Does</dt><dd>Names the cheapest way the measure can be satisfied <em>without</em> achieving the goal, before it gets adopted.</dd></div>
         </dl>
@@ -353,6 +353,10 @@
       <li>
         <span class="what">Translated all four protocols to software</span>
         <span class="why">Match the existing pattern / trace the real source / smallest reversible probe / restore green first. This mapping is the adaptation’s own, present in neither source.</span>
+      </li>
+      <li>
+        <span class="what">Added safeguards as a measure class</span>
+        <span class="why">A backup or rollback path is a measure too, and the hardest kind: the reading is binary, the reward is immediate, and the damage arrives at the one moment you cannot afford it. Neither source covers this — it came from exercising the skill against a real backup script, where the decisive defect was visible only by running it. <em>A snapshot nothing has ever restored from is a hypothesis, not a backup.</em></span>
       </li>
       <li>
         <span class="what">Connected the cobra effect to reward hacking</span>
