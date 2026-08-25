@@ -1,6 +1,6 @@
 {
   "name": "cobra",
-  "description": "Finds the cheapest way a measure can be satisfied without achieving its goal. Measured: +33.3pp on the tasks it targets, 89% trigger recall, zero false fires.",
+  "description": "Finds the cheapest way a measure can be satisfied without achieving its goal. Measured: +40.0pp on the tasks it targets, 78% trigger recall, zero false fires.",
   "version": "1.0.0",
   "author": { "name": "Bharat Goel" },
   "homepage": "https://github.com/bharat-goel/cobra-skill",

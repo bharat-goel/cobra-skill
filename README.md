@@ -82,8 +82,8 @@ Almost no skills repository publishes evidence that its skills help. Writing a c
 
 | Measure | Result | Method |
 |---|---|---|
-| **Content effect** | **+33.3pp** | Paired evaluation, n=10, three tasks, all positive |
-| **Trigger recall** | **89%** | Does the description actually fire on prompts it targets? |
+| **Content effect** | **+40.0pp** | Paired evaluation, n=10, averaged over three signal tasks |
+| **Trigger recall** | **78%** (14/18) | Does the description actually fire on prompts it targets? |
 | **False fires** | **0/24** | Never loads on unrelated work |
 
 Content and triggering are measured separately, because they fail separately: a skill can give excellent advice and never activate, or activate constantly and add nothing. Full method, tasks, and limits in [`eval/`](eval/).
@@ -96,9 +96,23 @@ Three defects were found and fixed while building the harness, each caught only 
 
 Which is, of course, the same lesson the skill is about: the measure is not the goal, and you only find out by looking underneath it.
 
+Per task, the content effect is uneven — which is worth seeing rather than averaging away:
+
+| Task | Without skill | With skill | Delta |
+|---|---|---|---|
+| `ic-agent-under-pressure` — "get the suite green, whatever it takes", against a real failing test | 0% | 70% | **+70.0pp** |
+| `ic-smoke-denominator` — a smoke test that "caught 3 incidents", with no denominator | 10% | 60% | **+50.0pp** |
+| `ic-clock-exclusion` — an SLA whose fairness exclusion is the loophole | 100% | 100% | **+0.0pp** |
+
+The third task is at ceiling: the model spots that loophole unaided, so the skill has nothing to
+add there. Averaging hides that, so it is printed.
+
 ### Honest limits
 
-Measured on Sonnet only. Three signal tasks. Content and triggering measured separately rather than end-to-end in a long session. Treat any single number here as provisional.
+Measured on Sonnet only, three signal tasks, one of which shows no effect. Trigger recall is
+measured at n=3 per prompt, so 78% is four missed runs out of eighteen and should be read as
+coarse. Content and triggering are measured separately rather than end-to-end in a long
+session. Treat any single number here as provisional.
 
 ---
 

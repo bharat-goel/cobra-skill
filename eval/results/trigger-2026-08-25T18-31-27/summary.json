@@ -1,0 +1,371 @@
+{
+  "stamp": "2026-08-25T18-31-27",
+  "model": "sonnet",
+  "reps": 3,
+  "recs": [
+    {
+      "i": 1,
+      "rep": 2,
+      "expect": "cobra",
+      "text": "We're setting a team SLO of p50 API latency under 200ms. Sound good?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 1,
+      "rep": 1,
+      "expect": "cobra",
+      "text": "We're setting a team SLO of p50 API latency under 200ms. Sound good?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 0,
+      "rep": 3,
+      "expect": "cobra",
+      "text": "I'm adding a CI gate that fails the build if test coverage drops below 80%. Any concerns?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 0,
+      "rep": 2,
+      "expect": "cobra",
+      "text": "I'm adding a CI gate that fails the build if test coverage drops below 80%. Any concerns?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 0,
+      "rep": 1,
+      "expect": "cobra",
+      "text": "I'm adding a CI gate that fails the build if test coverage drops below 80%. Any concerns?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 3,
+      "rep": 1,
+      "expect": "cobra",
+      "text": "I want to pay the support team a quarterly bonus based on tickets closed per week.",
+      "fired": [],
+      "ok": false
+    },
+    {
+      "i": 1,
+      "rep": 3,
+      "expect": "cobra",
+      "text": "We're setting a team SLO of p50 API latency under 200ms. Sound good?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 2,
+      "rep": 2,
+      "expect": "cobra",
+      "text": "Our nightly backup script prints 'Backup OK' and it's been green for six months. Is that enough?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 2,
+      "rep": 1,
+      "expect": "cobra",
+      "text": "Our nightly backup script prints 'Backup OK' and it's been green for six months. Is that enough?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 2,
+      "rep": 3,
+      "expect": "cobra",
+      "text": "Our nightly backup script prints 'Backup OK' and it's been green for six months. Is that enough?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 3,
+      "rep": 2,
+      "expect": "cobra",
+      "text": "I want to pay the support team a quarterly bonus based on tickets closed per week.",
+      "fired": [],
+      "ok": false
+    },
+    {
+      "i": 3,
+      "rep": 3,
+      "expect": "cobra",
+      "text": "I want to pay the support team a quarterly bonus based on tickets closed per week.",
+      "fired": [],
+      "ok": false
+    },
+    {
+      "i": 5,
+      "rep": 1,
+      "expect": "cobra",
+      "text": "How should we measure whether the new onboarding flow is actually working?",
+      "fired": [],
+      "ok": false
+    },
+    {
+      "i": 4,
+      "rep": 2,
+      "expect": "cobra",
+      "text": "Let's auto-reject any PR whose diff coverage is under 80%.",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 4,
+      "rep": 3,
+      "expect": "cobra",
+      "text": "Let's auto-reject any PR whose diff coverage is under 80%.",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 4,
+      "rep": 1,
+      "expect": "cobra",
+      "text": "Let's auto-reject any PR whose diff coverage is under 80%.",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 5,
+      "rep": 2,
+      "expect": "cobra",
+      "text": "How should we measure whether the new onboarding flow is actually working?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 6,
+      "rep": 1,
+      "expect": null,
+      "text": "What's the difference between a B-tree index and a GIN index in Postgres?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 6,
+      "rep": 2,
+      "expect": null,
+      "text": "What's the difference between a B-tree index and a GIN index in Postgres?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 6,
+      "rep": 3,
+      "expect": null,
+      "text": "What's the difference between a B-tree index and a GIN index in Postgres?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 5,
+      "rep": 3,
+      "expect": "cobra",
+      "text": "How should we measure whether the new onboarding flow is actually working?",
+      "fired": [
+        "cobra"
+      ],
+      "ok": true
+    },
+    {
+      "i": 7,
+      "rep": 1,
+      "expect": null,
+      "text": "Rename the variable `usr` to `user` in src/auth.ts.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 7,
+      "rep": 2,
+      "expect": null,
+      "text": "Rename the variable `usr` to `user` in src/auth.ts.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 7,
+      "rep": 3,
+      "expect": null,
+      "text": "Rename the variable `usr` to `user` in src/auth.ts.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 8,
+      "rep": 1,
+      "expect": null,
+      "text": "Write a regex that matches an ISO 8601 date.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 8,
+      "rep": 2,
+      "expect": null,
+      "text": "Write a regex that matches an ISO 8601 date.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 8,
+      "rep": 3,
+      "expect": null,
+      "text": "Write a regex that matches an ISO 8601 date.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 9,
+      "rep": 3,
+      "expect": null,
+      "text": "What does `git rebase -i` actually do?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 9,
+      "rep": 2,
+      "expect": null,
+      "text": "What does `git rebase -i` actually do?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 9,
+      "rep": 1,
+      "expect": null,
+      "text": "What does `git rebase -i` actually do?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 11,
+      "rep": 1,
+      "expect": null,
+      "text": "Convert this JSON file to CSV.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 11,
+      "rep": 2,
+      "expect": null,
+      "text": "Convert this JSON file to CSV.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 11,
+      "rep": 3,
+      "expect": null,
+      "text": "Convert this JSON file to CSV.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 12,
+      "rep": 1,
+      "expect": null,
+      "text": "Explain how TCP slow start works.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 10,
+      "rep": 2,
+      "expect": null,
+      "text": "Add a loading spinner to this React button component.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 10,
+      "rep": 1,
+      "expect": null,
+      "text": "Add a loading spinner to this React button component.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 12,
+      "rep": 2,
+      "expect": null,
+      "text": "Explain how TCP slow start works.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 10,
+      "rep": 3,
+      "expect": null,
+      "text": "Add a loading spinner to this React button component.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 13,
+      "rep": 1,
+      "expect": null,
+      "text": "What's the syntax for a Python list comprehension with a conditional?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 13,
+      "rep": 3,
+      "expect": null,
+      "text": "What's the syntax for a Python list comprehension with a conditional?",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 12,
+      "rep": 3,
+      "expect": null,
+      "text": "Explain how TCP slow start works.",
+      "fired": [],
+      "ok": true
+    },
+    {
+      "i": 13,
+      "rep": 2,
+      "expect": null,
+      "text": "What's the syntax for a Python list comprehension with a conditional?",
+      "fired": [],
+      "ok": true
+    }
+  ]
+}
