@@ -1,0 +1,11 @@
+{
+  "id": "st-looping-fixes",
+  "skill": "system-triage",
+  "kind": "signal",
+  "prompt": "The same integration test fails about one run in ten in CI. We've fixed it four times now — added a wait, bumped the timeout, wrapped it in a retry, and mocked one of the downstream calls. It keeps coming back. What now?",
+  "rationale": "The one situation where this skill reliably fires (33% overall recall, but 3/3 on looping prompts). Four failed fixes is the skill's named symptom of disorder: a fix repeatedly applied without holding means the domain was misjudged. Correct move is to stop fixing and make the failure observable, and to notice that the previous mitigations suppressed the signal. The default answer is a fifth mitigation.",
+  "verify": {
+    "type": "judge",
+    "rubric": "The reply must treat four failed fixes as evidence that the cause is not understood, and shift from fixing to diagnosing.\n\nPASS requires BOTH:\n- it says, in substance, that applying another mitigation is the wrong next move because the mechanism is still unknown; and\n- it proposes something to make the failure observable or reproducible before changing behaviour again — capturing state/logs at the moment of failure, running the test in a loop to get a reproduction, instrumenting it, bisecting, or isolating which dependency is actually non-deterministic.\n\nCredit but do not require: noticing that the earlier waits, timeouts, retries and mocks were symptom suppression that removed the evidence, or that the retry in particular now hides the real failure rate.\n\nA reply may still PASS if it recommends quarantining the test as an explicit stopgap, PROVIDED diagnosis is the main thrust.\n\nFAIL if its primary recommendation is another mitigation — a fifth fix, more retries, longer waits, more mocking, or quarantine with no diagnostic plan. FAIL if it gives a generic flaky-test checklist without engaging with the fact that four fixes already failed."
+  }
+}
