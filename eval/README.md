@@ -20,7 +20,7 @@ picks up a skill by accident and the injected content is the only difference.
 node eval/run.mjs --dry-run                 # list what would run
 node eval/run.mjs --reps 3 --model sonnet   # full run
 node eval/run.mjs --task ic-coverage-gate --reps 5
-node eval/run.mjs --skill system-triage
+node eval/run.mjs --skill cobra
 ```
 
 Results land in `eval/results/<timestamp>/` — `report.md`, `summary.json`, and the raw
@@ -55,11 +55,9 @@ only way to catch it.
 A judge that passes everything produces a clean-looking null result. Before trusting one,
 check that it fails when it should — the same canary `cobra` prescribes.
 
-The rubric judge was checked against three deliberately bad replies to `st-mixed-domains`,
-each matching a failure mode the rubric names: generic project-management advice, pure
-prioritisation, and a reply stuffed with the skill's own vocabulary but no substance. It
-failed all three, calling the last "generic, abstract meta-advice" — so it is grading the
-move, not the words. Re-run that check whenever a rubric changes.
+Check any rubric judge against deliberately bad replies — including one stuffed with the
+skill's own vocabulary but no substance — before trusting a null result from it. Re-run that
+check whenever a rubric changes.
 
 ## Reading the output
 
@@ -82,9 +80,9 @@ be revised or dropped; SkillsBench applies the same filter during human review.
   for the skill's own words, so some measured delta is genuine judgement and some is
   echo. The harm tasks are the guard -- pure echo would leak skill vocabulary into the
   rename and Postgres questions, and it does not.
-- **Results are model-dependent, and that is the main finding so far.** The same tasks
-  and verifiers scored +16.7pp on Haiku and 0.0pp on Sonnet: Sonnet already did the right
-  thing unaided on every task. A delta measured on one model says nothing about another.
+- **Results are model-dependent.** Everything here is measured on Sonnet. A delta measured on
+  one model says nothing about another, and SkillsBench found smaller models with skills can
+  match larger models without them.
 - **Runs are isolated, and this was not always true.** The first version executed in the
   repo root. That let the *control* arm read the skills off disk and inherit the parent
   `CLAUDE.md` describing them: control replies came back saying "Triage: this is

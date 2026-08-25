@@ -17,7 +17,7 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
-import { mkdtempSync, cpSync, rmSync, existsSync } from "node:fs";
+import { mkdtempSync, cpSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -162,14 +162,6 @@ function verify(spec, output) {
 // A task may declare a fixture: a small project copied fresh for every run, so a
 // run that edits files cannot contaminate the next one. Tasks without a fixture
 // share one empty directory. Both live outside the repo.
-function resolveSkill(name) {
-  for (const dir of ["skills", "retired"]) {
-    const p = join(ROOT, dir, name, "SKILL.md");
-    if (existsSync(p)) return p;
-  }
-  throw new Error(`no SKILL.md for ${name} in skills/ or retired/`);
-}
-
 function makeCwd(task) {
   if (!task.fixture) return SANDBOX;
   const dir = mkdtempSync(join(tmpdir(), "skill-eval-fx-"));
@@ -218,9 +210,7 @@ let done = 0;
 async function worker(queue) {
   while (queue.length) {
     const { t, cond, rep } = queue.shift();
-    // Shipped skills live in skills/; retired ones stay in retired/ so their evidence
-    // remains reproducible without being published.
-    const skillFile = cond === "treatment" ? resolveSkill(t.skill) : null;
+    const skillFile = cond === "treatment" ? join(ROOT, "skills", t.skill, "SKILL.md") : null;
     const cwd = makeCwd(t);
     const { out, err, code } = await runClaude(t.prompt, skillFile, cwd);
     if (cwd !== SANDBOX) rmSync(cwd, { recursive: true, force: true });
