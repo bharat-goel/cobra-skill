@@ -33,6 +33,7 @@ const MODEL = arg("model", "sonnet");
 const CONC = Number(arg("concurrency", 4));
 const ONLY_TASK = arg("task", null);
 const ONLY_SKILL = arg("skill", null);
+const JUDGE_MODEL = arg("judge-model", "sonnet");
 const DRY = process.argv.includes("--dry-run");
 
 const tasks = readdirSync(join(HERE, "tasks"))
@@ -78,6 +79,50 @@ const firstUnnegated = (hay, pats, window = 45) => {
   return best;
 };
 
+// A blind rubric judge for behaviours that substring matching cannot see. Abstract
+// moves ("treat these as different kinds of problem") have too many valid phrasings
+// for a pattern list: correct replies were being scored wrong for saying "different
+// problems" instead of "three different problems", or "read replica" instead of
+// "read-only".
+//
+// The judge is never told which arm produced the reply, and never sees the skill.
+// Without that, it would reward replies that sound like the skill rather than
+// replies that do the right thing -- which would inflate every number here.
+function judgePrompt(task, reply) {
+  return [
+    "You are grading one reply against a rubric. You do not know how it was produced.",
+    "",
+    "=== QUESTION THE REPLY WAS ANSWERING ===",
+    task.prompt,
+    "",
+    "=== RUBRIC ===",
+    task.verify.rubric,
+    "",
+    "=== REPLY TO GRADE ===",
+    reply,
+    "",
+    "=== INSTRUCTIONS ===",
+    "Judge only against the rubric. Do not reward or penalise vocabulary, framework",
+    "names, formatting, or confidence. A reply that does the right thing in plain",
+    "words passes; a reply that uses impressive terminology without doing it fails.",
+    "Output exactly two lines:",
+    "VERDICT: PASS or FAIL",
+    "REASON: one sentence",
+  ].join("\n");
+}
+
+async function runJudge(task, reply) {
+  const { out, code } = await runClaude(judgePrompt(task, reply), null, SANDBOX, JUDGE_MODEL);
+  if (code !== 0 || !out) return { pass: false, why: "judge failed to run" };
+  const verdict = /VERDICT:\s*(PASS|FAIL)/i.exec(out);
+  const reason = /REASON:\s*(.+)/i.exec(out);
+  if (!verdict) return { pass: false, why: "judge returned no verdict" };
+  return {
+    pass: verdict[1].toUpperCase() === "PASS",
+    why: `judge: ${(reason?.[1] ?? "").trim().slice(0, 110)}`,
+  };
+}
+
 function verify(spec, output) {
   const hay = output.toLowerCase();
   const words = output.trim().split(/\s+/).filter(Boolean).length;
@@ -105,6 +150,8 @@ function verify(spec, output) {
       if (a !== -1 && a < b) return { pass: false, why: "diagnosis proposed before stabilising" };
       return { pass: true, why: "stabilise precedes diagnose" };
     }
+    case "judge":
+      throw new Error("judge specs are graded asynchronously, not through verify()");
     default:
       throw new Error(`unknown verifier type: ${spec.type}`);
   }
@@ -122,8 +169,8 @@ function makeCwd(task) {
   return dir;
 }
 
-function runClaude(prompt, skillFile, cwd) {
-  const args = ["-p", "--setting-sources", "project", "--model", MODEL];
+function runClaude(prompt, skillFile, cwd, model = MODEL) {
+  const args = ["-p", "--setting-sources", "project", "--model", model];
   if (skillFile) args.push("--append-system-prompt-file", skillFile);
   args.push(prompt);
   return new Promise((res) => {
@@ -169,8 +216,11 @@ async function worker(queue) {
     if (cwd !== SANDBOX) rmSync(cwd, { recursive: true, force: true });
     const name = `${t.id}__${cond}__${rep}`;
     writeFileSync(join(OUT, "raw", `${name}.txt`), out || `<<no output>>\n${err}`);
-    const v = code === 0 && out ? verify(t.verify, out) : { pass: false, why: `run failed (exit ${code})` };
-    records.push({ task: t.id, skill: t.skill, kind: t.kind, cond, rep, pass: v.pass, why: v.why });
+    let v;
+    if (code !== 0 || !out) v = { pass: false, why: `run failed (exit ${code})` };
+    else if (t.verify.type === "judge") v = await runJudge(t, out);
+    else v = verify(t.verify, out);
+    records.push({ task: t.id, skill: t.skill, kind: t.kind, method: t.verify.type === "judge" ? "judge" : "pattern", cond, rep, pass: v.pass, why: v.why });
     done++;
     process.stdout.write(`\r  ${done}/${jobs.length}  ${v.pass ? "PASS" : "FAIL"}  ${name.padEnd(42)}`);
   }

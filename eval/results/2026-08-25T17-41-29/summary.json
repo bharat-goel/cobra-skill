@@ -1,0 +1,841 @@
+{
+  "stamp": "2026-08-25T17-41-29",
+  "model": "sonnet",
+  "reps": 10,
+  "rows": [
+    {
+      "id": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    },
+    {
+      "id": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    },
+    {
+      "id": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    },
+    {
+      "id": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    }
+  ],
+  "records": [
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"routine\" framing by naming what's different about production (load, volume, "
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" framing by pointing out the data/environment diff"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same command\" framing by listing multiple concrete ways prod differs from st"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script = same risk\" framing and gives multiple concrete precautions tie"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: The reply explicitly frames this run as materially different from the routine staging job (scale, live load, c"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" routine framing by explaining prod's scale/load/p"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" routine framing by enumerating material differenc"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script = same risk\" framing and gives multiple concrete precautions tie"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"nothing changed\" framing by explaining staging replicas absorb load that pro"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects relying on \"hasn't failed in two years,\" identifies concrete ways prod differs fr"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same command = same risk\" framing and gives multiple concrete, target-specif"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" framing as a false equivalence and gives multiple"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same as always\" framing by naming what changed (scale, locking, side effects"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" routine framing as irrelevant to risk and gives m"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same command\" routine framing by naming what's actually different (scale, cr"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" routine framing and gives multiple concrete preca"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same script, same command\" routine framing as invalidated by the target chan"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"routine\" framing by noting the target changed from a low-stakes replica to a"
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the routine framing (\"the risk isn't the script, it's the environment it's now po"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply explicitly names confounding as the core problem and, despite one confused self-contradictory line, "
+    },
+    {
+      "task": "st-clear-cliff",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects the \"same command = routine\" framing and ties multiple concrete precautions (chec"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: Step 2 explicitly proposes rolling back changes one at a time (or cohort comparisons) as \"the only way to get "
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: The reply explicitly names confounding as the core issue and, in steps 2 and 4, proposes empirical interventio"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: Despite framing itself as \"without touching production,\" the reply explicitly proposes a rapid holdback test t"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: The reply identifies confounding as the core problem and proposes a concrete concurrent-holdout experiment (in"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: The reply explicitly recognizes the three changes are confounded and, despite framing itself as \"no changes ye"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply explicitly identifies the confound, spends most of its plan on observational de-confounding but stil"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply explicitly names the confound, uses observational steps only to narrow suspects, and centers a holdb"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly names the confounding problem and proposes empirical interventions (sequential flag-based"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: Step 4 explicitly proposes independently toggling each change via feature flags/config rollback on a slice of "
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply names the confound explicitly and, in Phase 3, proposes a concrete empirical intervention (flip each"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: Step 4 explicitly proposes a controlled A/B slice reverting one change at a time as a diagnostic when logs can"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: The reply explicitly names the three-way confound, offers a canary rollback/reversible probe as a way to separ"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: The reply explicitly states pure analysis can't attribute the drop with three confounded changes, and proposes"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: Phase 2 explicitly recognizes the confound can't be resolved by analysis alone and proposes a reversible canar"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply explicitly recognizes the three changes are confounded and cannot always be separated post hoc, and "
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply investigates the API's root cause, imposes a freeze/decision on the design churn, and routes around "
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: The reply explicitly gives each blocker a distinct kind of response — diagnosis/investigation for the flaky AP"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply explicitly recognizes the three shipped changes are confounded and analysis alone can't isolate the "
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: While the reply front-loads segmentation/correlation, it explicitly recognizes the three changes are confounde"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly recommends a randomized holdback/A-A diagnostic probe that reroutes traffic to old card/r"
+    },
+    {
+      "task": "st-disguised-complex",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly names the confound and includes step 4, a flagged one-at-a-time reversible probe (an actu"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: The reply distinguishes the API as an investigable technical issue (\"isolate\" the bottleneck), the design chur"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: The reply explicitly treats design churn as needing a freeze/decision, the payment sandbox as an external bloc"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: The reply investigates the API's cause via load testing, imposes a hard freeze (not more analysis) on design c"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply investigates the API's flaky failure point, treats design churn as needing a hard freeze rather than"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: The reply gives distinct treatments — investigation/measurement for the API, an immediate freeze decision for "
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply investigates/isolates the root cause for the flaky API, calls for a freeze decision (not more analys"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly treats design churn as a decision to force (freeze now), the payment outage as external/t"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply distinguishes the API as an unknown to profile/investigate, design churn as needing a freeze/decisio"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: The reply explicitly frames the API issue as investigable via load testing, the design churn as needing a scop"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: The reply investigates the API's cause (load testing to find the mechanism), treats design churn as needing an"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: The reply explicitly treats the API as needing investigation/load-test data, the design churn as needing a fre"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply explicitly treats the API as a diagnosable/investigatable problem, the design churn as needing an im"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: The reply distinctly treats the API as investigable via load-testing, the design churn as needing an authorita"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply explicitly treats the API as an investigable/measurable problem, the design churn as needing a force"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "clean (33 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "clean (30 words)"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly assigns each blocker a distinct response mode — measurement/profiling for the API, an imm"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: The reply explicitly treats the API as a discoverable root-cause investigation, the design churn as a decision"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 4,
+      "pass": true,
+      "why": "clean (21 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "clean (86 words)"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply explicitly treats the API issue as investigable via load-testing/profiling, the design churn as need"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 6,
+      "pass": true,
+      "why": "clean (27 words)"
+    },
+    {
+      "task": "st-mixed-domains",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly treats design churn as needing a freeze/decision (not analysis), the API flakiness as dia"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 5,
+      "pass": true,
+      "why": "clean (33 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 7,
+      "pass": true,
+      "why": "clean (90 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 8,
+      "pass": true,
+      "why": "clean (28 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "clean (27 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 9,
+      "pass": true,
+      "why": "clean (82 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "control",
+      "rep": 10,
+      "pass": true,
+      "why": "clean (145 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "clean (28 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 4,
+      "pass": true,
+      "why": "clean (88 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "clean (129 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 7,
+      "pass": true,
+      "why": "clean (36 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 5,
+      "pass": true,
+      "why": "clean (76 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 8,
+      "pass": true,
+      "why": "clean (35 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 6,
+      "pass": true,
+      "why": "clean (176 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 10,
+      "pass": true,
+      "why": "clean (36 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "method": "pattern",
+      "cond": "treatment",
+      "rep": 9,
+      "pass": true,
+      "why": "clean (118 words)"
+    }
+  ]
+}

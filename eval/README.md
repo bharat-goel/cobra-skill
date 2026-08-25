@@ -50,6 +50,17 @@ Every raw reply is written to disk, so any verdict can be re-checked by hand. Th
 matters: a keyword verifier can pass for the wrong reason, and the transcript is the
 only way to catch it.
 
+## Validating the judge
+
+A judge that passes everything produces a clean-looking null result. Before trusting one,
+check that it fails when it should — the same canary `incentive-check` prescribes.
+
+The rubric judge was checked against three deliberately bad replies to `st-mixed-domains`,
+each matching a failure mode the rubric names: generic project-management advice, pure
+prioritisation, and a reply stuffed with the skill's own vocabulary but no substance. It
+failed all three, calling the last "generic, abstract meta-advice" — so it is grading the
+move, not the words. Re-run that check whenever a rubric changes.
+
 ## Reading the output
 
 `report.md` gives per-task control and treatment pass rates, the delta in percentage

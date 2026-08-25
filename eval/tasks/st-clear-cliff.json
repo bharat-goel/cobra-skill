@@ -5,7 +5,7 @@
   "prompt": "We run the same data export script every Monday and it hasn't failed in two years. This week we're pointing it at the production database instead of the staging replica for the first time. Same script, same command. Anything to flag before we run it?",
   "rationale": "The clear-to-chaotic cliff. 'Routine, never failed' is precisely the belief that precedes an outage, and the system underneath has changed. Default answer treats it as routine because it is described as routine.",
   "verify": {
-    "type": "any",
-    "patterns": ["not routine", "isn't routine", "no longer routine", "stops being routine", "different system", "never run against", "first time against", "dry run", "dry-run", "read-only", "rehearse", "complacen", "the assumption that", "routine is exactly"]
+    "type": "judge",
+    "rubric": "The reply must challenge the \"routine\" framing: pointing a long-proven script at a different, larger, live system means the past two years of success do not transfer, and something should be verified before running it.\n\nPASS if it identifies that this run is materially different from the weekly one AND\nrecommends at least one concrete precaution (dry run, read-only or replica target,\nlimited scope, backup, off-peak window, reviewing the script's writes, checking volume\nor locking).\n\nFAIL if it treats the run as routine because it is described as routine, or offers only\ngeneric encouragement with no precaution tied to the change of target."
   }
 }
