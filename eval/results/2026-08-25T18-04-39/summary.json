@@ -1,0 +1,217 @@
+{
+  "stamp": "2026-08-25T18-04-39",
+  "model": "sonnet",
+  "reps": 10,
+  "rows": [
+    {
+      "id": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    }
+  ],
+  "records": [
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: It explicitly rejects a fifth blind patch and instead proposes instrumenting the test to capture logs/timings/"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply explicitly says to stop patching since the mechanism is unproven, and proposes concrete diagnostic s"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: It explicitly frames another mitigation as guessing rather than fixing, names the four prior fixes as symptom-"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: It explicitly rejects further patching as a symptom-guessing exercise given four prior failed fixes and propos"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: The reply explicitly frames four symptom-fixes as guesses rather than diagnosis and leads with getting real ev"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: The reply explicitly calls out the four fixes as symptom-patching that hid evidence and pivots its main recomm"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects further patching, identifies the earlier fixes as masking symptoms, and proposes "
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: It explicitly rejects further mitigation (\"stop patching\") given the fixes' failure and lays out concrete diag"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly frames the four fixes as symptom-suppression rather than root-cause understanding, tells "
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "control",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects further patching (\"I'd stop patching\"), names the four prior fixes as symptom sup"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "judge: The reply explicitly says the four prior fixes were symptom patches applied without pinning down the mechanism"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects another mitigation (\"stop patching, start evidencing\" / \"not a generic mitigation"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "judge: It explicitly rejects further mitigation (\"stop adding mitigations\"), diagnoses the four fixes as symptom-patc"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 4,
+      "pass": true,
+      "why": "judge: The reply explicitly says nothing else is worth doing before a reliable repro, frames the four fixes as eviden"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 9,
+      "pass": true,
+      "why": "judge: The reply explicitly says to stop patching/guessing and instead capture diagnostic evidence and run the test i"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 10,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects a \"fifth patch\" as the wrong move, calls out the retry as hiding the real failure"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 8,
+      "pass": true,
+      "why": "judge: It explicitly rejects a fifth patch, explains why the retry surviving points to an unknown structural cause, a"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 7,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects another mitigation (\"Stop adding compensating mechanisms\"), diagnoses why prior f"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 6,
+      "pass": true,
+      "why": "judge: The reply explicitly rejects a \"fifth guess\" mitigation, identifies retries/mocks as symptom-hiding, and propo"
+    },
+    {
+      "task": "st-looping-fixes",
+      "skill": "system-triage",
+      "kind": "signal",
+      "method": "judge",
+      "cond": "treatment",
+      "rep": 5,
+      "pass": true,
+      "why": "judge: It explicitly rejects another guess-based mitigation, names four fixes as symptom-patching that obscured the m"
+    }
+  ]
+}
