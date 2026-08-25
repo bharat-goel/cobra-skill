@@ -60,19 +60,100 @@ And when the agent is the one being measured, it says so out loud rather than qu
 
 ---
 
+## New to Claude skills?
+
+A **skill** is a folder with a `SKILL.md` in it. The frontmatter carries a `name` and a
+`description`; the body is instructions. Claude Code reads every installed skill's
+*description* at startup and loads the *body* only when a task matches — so a skill costs
+almost nothing until it is relevant.
+
+That design has one consequence worth understanding before you install anything: **the
+description is the whole trigger.** A skill whose description does not match how people
+actually phrase things will never activate, no matter how good its contents are. It is why
+this repository measures triggering separately from content — see [`eval/RESULTS.md`](eval/RESULTS.md).
+
+Skills are not specific to this repository. Anthropic documents the format at
+[Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills), and you can
+scaffold your own with `claude plugin init <name>`.
+
+**What `cobra` costs you:** ~236 tokens of always-on context (just its description), and
+~1.9k tokens on the occasions it actually fires. Check any plugin's cost yourself with
+`claude plugin details <name>`.
+
 ## Install
 
-```bash
+You need [Claude Code](https://docs.claude.com/en/docs/claude-code) installed. Verify with
+`claude --version`.
+
+### Option 1 — as a plugin (recommended)
+
+From inside a Claude Code session:
+
+```
 /plugin marketplace add bharat-goel/cobra-skill
 /plugin install cobra
 ```
 
-Or symlink it directly:
+Or from your terminal:
 
 ```bash
-git clone https://github.com/bharat-goel/cobra-skill && cd cobra-skill
+claude plugin marketplace add bharat-goel/cobra-skill
+claude plugin install cobra@cobra-skill
+```
+
+Restart Claude Code, then confirm it registered:
+
+```bash
+claude plugin details cobra
+```
+
+### Option 2 — symlink the skill
+
+Skips the plugin system entirely. Edits to the clone take effect immediately, which is what
+you want if you intend to modify it.
+
+```bash
+git clone https://github.com/bharat-goel/cobra-skill
+cd cobra-skill
 ln -sfn "$PWD/skills/cobra" ~/.claude/skills/cobra
 ```
+
+### Option 3 — copy it
+
+No git, no plugin system, no updates.
+
+```bash
+mkdir -p ~/.claude/skills/cobra
+curl -sL https://raw.githubusercontent.com/bharat-goel/cobra-skill/main/skills/cobra/SKILL.md \
+  -o ~/.claude/skills/cobra/SKILL.md
+```
+
+### Scope
+
+`~/.claude/skills/` installs for **you**, everywhere. To install for one project instead —
+so it travels with the repo and your teammates get it — put the skill in `.claude/skills/`
+inside that project and commit it.
+
+### Check it works
+
+Restart Claude Code and ask something it should catch:
+
+> I'm adding a CI gate that fails the build if test coverage drops below 80%. Any concerns?
+
+You should get the assertion-free-tests problem back. If nothing happens, see below.
+
+### If it does not fire
+
+- **Restart first.** Skills are read at session start; a newly installed one will not appear
+  mid-session.
+- **Confirm it is registered** — `claude plugin details cobra`, or check that
+  `~/.claude/skills/cobra/SKILL.md` exists and the symlink is not broken.
+- **It genuinely will not fire on everything.** Measured recall is 78%, and the misses are
+  real: a prompt about paying bonuses on tickets closed did not trigger it, because the
+  wording contains no test, metric or threshold. You can always invoke it directly with
+  `/cobra`.
+- **Nothing to fix if the answer was already right.** One of three measured tasks sits at
+  100% without the skill. On those, firing would add nothing.
 
 ---
 
