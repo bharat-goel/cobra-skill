@@ -1,0 +1,505 @@
+{
+  "stamp": "2026-08-25T17-01-51",
+  "model": "claude-haiku-4-5-20251001",
+  "reps": 3,
+  "rows": [
+    {
+      "id": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    },
+    {
+      "id": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "control": 0,
+      "treatment": 100,
+      "delta": 100
+    },
+    {
+      "id": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "control": 66.66666666666666,
+      "treatment": 100,
+      "delta": 33.33333333333334
+    },
+    {
+      "id": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    },
+    {
+      "id": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 66.66666666666666,
+      "delta": -33.33333333333334
+    },
+    {
+      "id": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 33.33333333333333,
+      "treatment": 33.33333333333333,
+      "delta": 0
+    },
+    {
+      "id": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    },
+    {
+      "id": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "control": 100,
+      "treatment": 100,
+      "delta": 0
+    }
+  ],
+  "records": [
+    {
+      "task": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"restore\""
+    },
+    {
+      "task": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"restore\""
+    },
+    {
+      "task": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "matched \"restore\""
+    },
+    {
+      "task": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "matched \"restore\""
+    },
+    {
+      "task": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"restore\""
+    },
+    {
+      "task": "ic-backup-safeguard",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"restore\""
+    },
+    {
+      "task": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 1,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 2,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 3,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"assert\""
+    },
+    {
+      "task": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"assert\""
+    },
+    {
+      "task": "ic-coverage-gate",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "matched \"assert\""
+    },
+    {
+      "task": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"p99\""
+    },
+    {
+      "task": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 2,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"p99\""
+    },
+    {
+      "task": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"shed\""
+    },
+    {
+      "task": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "clean (189 words)"
+    },
+    {
+      "task": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "matched \"shed\""
+    },
+    {
+      "task": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "clean (237 words)"
+    },
+    {
+      "task": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "clean (224 words)"
+    },
+    {
+      "task": "ic-latency-slo",
+      "skill": "incentive-check",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"shed\""
+    },
+    {
+      "task": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "clean (255 words)"
+    },
+    {
+      "task": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "clean (210 words)"
+    },
+    {
+      "task": "ic-noop-routine",
+      "skill": "incentive-check",
+      "kind": "harm",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "clean (251 words)"
+    },
+    {
+      "task": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "stabilise precedes diagnose"
+    },
+    {
+      "task": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "stabilise precedes diagnose"
+    },
+    {
+      "task": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "stabilise precedes diagnose"
+    },
+    {
+      "task": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "stabilise precedes diagnose"
+    },
+    {
+      "task": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": false,
+      "why": "diagnosis proposed before stabilising"
+    },
+    {
+      "task": "st-chaotic-incident",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "stabilise precedes diagnose"
+    },
+    {
+      "task": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"same shape\""
+    },
+    {
+      "task": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 2,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 3,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": false,
+      "why": "no required pattern present"
+    },
+    {
+      "task": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"subset\""
+    },
+    {
+      "task": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "matched \"canary\""
+    },
+    {
+      "task": "st-clear-pattern",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"match the\""
+    },
+    {
+      "task": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "matched \"canary\""
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "cond": "control",
+      "rep": 2,
+      "pass": true,
+      "why": "clean (43 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "clean (64 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "cond": "control",
+      "rep": 3,
+      "pass": true,
+      "why": "clean (42 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "clean (48 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "clean (67 words)"
+    },
+    {
+      "task": "st-noop-routine",
+      "skill": "system-triage",
+      "kind": "harm",
+      "cond": "treatment",
+      "rep": 3,
+      "pass": true,
+      "why": "clean (26 words)"
+    },
+    {
+      "task": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"canary\""
+    },
+    {
+      "task": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "treatment",
+      "rep": 2,
+      "pass": true,
+      "why": "matched \"dual-write\""
+    },
+    {
+      "task": "st-complex-migration",
+      "skill": "system-triage",
+      "kind": "signal",
+      "cond": "control",
+      "rep": 1,
+      "pass": true,
+      "why": "matched \"reversible\""
+    }
+  ]
+}

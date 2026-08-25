@@ -1,0 +1,11 @@
+{
+  "id": "st-disguised-complex",
+  "skill": "system-triage",
+  "kind": "signal",
+  "prompt": "Our recommendation model's click-through rate dropped 12% after we shipped three changes two weeks ago: new ranking weights, a redesigned result card, and a longer cache TTL. Leadership wants a full root-cause analysis before we change anything. What's the plan?",
+  "rationale": "Looks complicated (analysable) and the request explicitly demands analysis first. Actually complex -- three interacting changes plus user behaviour, two weeks stale. The skill's named failure is demanding a root cause before touching anything; correct move is reversible probes, one change at a time.",
+  "verify": {
+    "type": "any",
+    "patterns": ["one at a time", "one change at a time", "turn off", "toggle", "disable one", "revert one", "a/b", "holdout", "interaction between", "only by testing", "won't find it in the data", "can't be determined analytically", "push back"]
+  }
+}

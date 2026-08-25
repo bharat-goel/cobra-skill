@@ -16,10 +16,13 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
+import { tmpdir } from "node:os";
+import { mkdtempSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
+const SANDBOX = mkdtempSync(join(tmpdir(), "skill-eval-"));
 
 function arg(name, fallback) {
   const i = process.argv.indexOf(`--${name}`);
@@ -114,7 +117,11 @@ function runClaude(prompt, skillFile) {
   if (skillFile) args.push("--append-system-prompt-file", skillFile);
   args.push(prompt);
   return new Promise((res) => {
-    const p = spawn("claude", args, { cwd: ROOT });
+    // Runs execute in an empty directory outside the repo. Running in ROOT let the
+    // control arm read the skills off disk and inherit the parent CLAUDE.md that
+    // describes them -- control replies came back using the skill's own vocabulary,
+    // which silently collapsed every measured delta toward zero.
+    const p = spawn("claude", args, { cwd: SANDBOX });
     let out = "", err = "";
     p.stdout.on("data", (d) => (out += d));
     p.stderr.on("data", (d) => (err += d));
@@ -185,7 +192,7 @@ const dpp = (n) => (Number.isNaN(n) ? "n/a" : `${n >= 0 ? "+" : ""}${n.toFixed(1
 let md = `# Skill evaluation — ${STAMP}\n\n`;
 md += `Model \`${MODEL}\`, ${REPS} repetitions per condition, ${jobs.length} runs.\n`;
 md += `Control and treatment are identical except that treatment has the skill's SKILL.md appended to the system prompt.\n`;
-md += `Both use \`--setting-sources project\`, so installed user skills are invisible in either arm.\n\n`;
+md += `Both use \`--setting-sources project\` and run in an empty directory outside the repo, so neither arm can see the installed skills, the repo, or its CLAUDE.md.\n\n`;
 md += `## Signal tasks — does the skill change the answer?\n\n`;
 md += `| Task | Skill | Control | With skill | Delta |\n|---|---|---|---|---|\n`;
 for (const r of signal) md += `| \`${r.id}\` | ${r.skill} | ${pct(r.control)} | ${pct(r.treatment)} | **${dpp(r.delta)}** |\n`;

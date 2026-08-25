@@ -66,10 +66,23 @@ be revised or dropped; SkillsBench applies the same filter during human review.
 - **Small n.** Eight tasks, three repetitions. Enough to catch a skill that does
   nothing or actively harms; not enough for a confident effect size.
 - **Verifiers reward vocabulary.** They detect whether the reply *names* the right
-  move, which correlates with but is not identical to giving good advice.
-- **Repo context leaks in.** Runs execute in the repo root, so both arms may pick up
-  `CLAUDE.md`. It is constant across conditions, so the pairing holds, but it is not
-  a clean-room.
+  move, which correlates with but is not identical to giving good advice. This gets
+  sharper as tasks get harder: with the skill in context the model is likelier to reach
+  for the skill's own words, so some measured delta is genuine judgement and some is
+  echo. The harm tasks are the guard -- pure echo would leak skill vocabulary into the
+  rename and Postgres questions, and it does not.
+- **Results are model-dependent, and that is the main finding so far.** The same tasks
+  and verifiers scored +16.7pp on Haiku and 0.0pp on Sonnet: Sonnet already did the right
+  thing unaided on every task. A delta measured on one model says nothing about another.
+- **Runs are isolated, and this was not always true.** The first version executed in the
+  repo root. That let the *control* arm read the skills off disk and inherit the parent
+  `CLAUDE.md` describing them: control replies came back saying "Triage: this is
+  complicated, not complex" and proposing "a small reversible probe" -- the skill's own
+  vocabulary and its core move, in the arm that was supposed to have never seen it. It
+  silently collapsed every measured delta toward zero and invalidated an entire round of
+  results. Runs now execute in an empty directory outside the repo. **If you change how
+  runs are spawned, re-check this first** -- a contaminated control fails quietly, looks
+  like a clean null result, and is indistinguishable from "the skill does nothing".
 
 ## Prior art
 
