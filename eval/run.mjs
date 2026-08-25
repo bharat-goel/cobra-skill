@@ -46,11 +46,34 @@ if (!tasks.length) {
 // Deterministic and auditable: every decision is a substring test over the raw
 // reply, and the raw reply is written to disk so any verdict can be re-checked.
 
-const firstIndex = (hay, pats) =>
-  pats.reduce((min, p) => {
-    const i = hay.indexOf(p.toLowerCase());
-    return i !== -1 && (min === -1 || i < min) ? i : min;
-  }, -1);
+// A reply that says "don't investigate yet, stabilise first" mentions diagnosis
+// before rollback, but advocates the opposite. Naive ordering marks the better
+// answer wrong -- observed at -100pp before this was fixed. So an occurrence
+// preceded by a negation cue is skipped and the next one considered.
+const NEGATIONS = [
+  "don't", "do not", "not ", "never", "avoid", "rather than", "instead of",
+  "without", "no need to", "before you", "premature", "resist", "skip",
+  "hold off", "defer", "later", "only once", "only after", "after you",
+];
+
+const firstUnnegated = (hay, pats, window = 45) => {
+  let best = -1;
+  for (const p of pats) {
+    const needle = p.toLowerCase();
+    let from = 0;
+    for (;;) {
+      const i = hay.indexOf(needle, from);
+      if (i === -1) break;
+      const ctx = hay.slice(Math.max(0, i - window), i);
+      if (!NEGATIONS.some((n) => ctx.includes(n))) {
+        if (best === -1 || i < best) best = i;
+        break;
+      }
+      from = i + needle.length;
+    }
+  }
+  return best;
+};
 
 function verify(spec, output) {
   const hay = output.toLowerCase();
@@ -73,8 +96,8 @@ function verify(spec, output) {
         : { pass: true, why: `clean (${words} words)` };
     }
     case "ordered": {
-      const b = firstIndex(hay, spec.before);
-      const a = firstIndex(hay, spec.after);
+      const b = firstUnnegated(hay, spec.before);
+      const a = firstUnnegated(hay, spec.after);
       if (b === -1) return { pass: false, why: "no stabilising action proposed" };
       if (a !== -1 && a < b) return { pass: false, why: "diagnosis proposed before stabilising" };
       return { pass: true, why: "stabilise precedes diagnose" };
