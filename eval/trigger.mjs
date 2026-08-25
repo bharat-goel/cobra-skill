@@ -34,18 +34,24 @@ const CONC = Number(arg("concurrency", 5));
 
 const { prompts } = JSON.parse(readFileSync(join(HERE, "trigger-prompts.json"), "utf8"));
 
-function firedSkills(streamJson) {
+// Returns the skills that fired AND how many stream events parsed. The event count
+// matters: a run that produced nothing is indistinguishable from a run where the
+// skill correctly stayed silent, and scoring the former as "clean" would let an
+// outage report a perfect false-fire rate.
+function readStream(streamJson) {
   const fired = new Set();
+  let events = 0;
   for (const line of streamJson.split("\n")) {
     let e;
     try { e = JSON.parse(line); } catch { continue; }
+    events++;
     const items = e?.message?.content;
     if (!Array.isArray(items)) continue;
     for (const c of items) {
       if (c.type === "tool_use" && c.name === "Skill" && c.input?.skill) fired.add(c.input.skill);
     }
   }
-  return [...fired];
+  return { fired: [...fired], events };
 }
 
 // NOTE: default setting sources here, unlike run.mjs. The whole point is to let the
@@ -53,10 +59,11 @@ function firedSkills(streamJson) {
 const run = (prompt) =>
   new Promise((res) => {
     const p = spawn("claude", ["-p", "--output-format", "stream-json", "--verbose", "--model", MODEL, prompt], { cwd: SANDBOX });
-    let out = "";
+    let out = "", err = "";
     p.stdout.on("data", (d) => (out += d));
-    p.on("close", (code) => res({ out, code }));
-    p.on("error", () => res({ out: "", code: -1 }));
+    p.stderr.on("data", (d) => (err += d));
+    p.on("close", (code) => res({ out, err, code }));
+    p.on("error", (e) => res({ out: "", err: String(e), code: -1 }));
   });
 
 const jobs = [];
@@ -72,10 +79,16 @@ let done = 0;
 async function worker(q) {
   while (q.length) {
     const { p, i, rep } = q.shift();
-    const { out, code } = await run(p.text);
-    writeFileSync(join(OUT, "raw", `p${String(i).padStart(2, "0")}__rep${rep}.jsonl`), out);
-    const fired = code === 0 ? firedSkills(out).filter((s) => OURS.includes(s)) : [];
-    recs.push({ i, rep, expect: p.expect, text: p.text, fired, ok: p.expect ? fired.includes(p.expect) : fired.length === 0 });
+    const { out, err, code } = await run(p.text);
+    writeFileSync(join(OUT, "raw", `p${String(i).padStart(2, "0")}__rep${rep}.jsonl`), out || `<<no output>>\n${err}`);
+    const { fired: allFired, events } = readStream(out);
+    // No exit code and no parseable events both mean the run told us nothing.
+    // Such a run must not be scored as a pass -- least of all on a negative
+    // prompt, where "nothing fired" is the success condition.
+    const failed = code !== 0 || events === 0;
+    const fired = failed ? [] : allFired.filter((s) => OURS.includes(s));
+    const ok = failed ? false : p.expect ? fired.includes(p.expect) : fired.length === 0;
+    recs.push({ i, rep, expect: p.expect, text: p.text, fired, code, events, failed, ok });
     done++;
     process.stdout.write(`\r  ${done}/${jobs.length}`);
   }
@@ -85,7 +98,11 @@ await Promise.all(Array.from({ length: Math.min(CONC, q.length) }, () => worker(
 process.stdout.write("\n\n");
 
 const pct = (n, d) => (d ? `${((n / d) * 100).toFixed(0)}%` : "n/a");
+const failures = recs.filter((r) => r.failed);
 let md = `# Trigger evaluation — ${STAMP}\n\nModel \`${MODEL}\`, ${REPS} reps, ${jobs.length} runs.\nDefault setting sources (installed skills visible), empty cwd outside the repo.\nActivation detected from a \`Skill\` tool_use event in stream-json.\n\n`;
+if (failures.length)
+  md += `> **${failures.length} of ${recs.length} runs failed** (non-zero exit, or no parseable stream events).\n> Failed runs are scored as not-passing in both arms, so the rates below are lower bounds\n> rather than clean measurements. Re-run before quoting these numbers.\n\n`;
+else md += `All ${recs.length} runs completed.\n\n`;
 
 for (const skill of OURS) {
   const pos = recs.filter((r) => r.expect === skill);
@@ -118,4 +135,6 @@ for (const skill of OURS) {
   console.log(`${skill.padEnd(18)} recall ${pct(pos.filter((r) => r.ok).length, pos.length).padStart(4)}  (${pos.filter((r) => r.ok).length}/${pos.length})`);
 }
 console.log(`${"negatives".padEnd(18)} silent ${pct(clean, negs.length).padStart(4)}  (${clean}/${negs.length})`);
+if (failures.length)
+  console.log(`\n!! ${failures.length}/${recs.length} runs FAILED — rates above are lower bounds, not measurements.`);
 console.log(`\nReport: eval/results/trigger-${STAMP}/report.md`);

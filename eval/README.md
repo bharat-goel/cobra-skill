@@ -50,6 +50,21 @@ Every raw reply is written to disk, so any verdict can be re-checked by hand. Th
 matters: a keyword verifier can pass for the wrong reason, and the transcript is the
 only way to catch it.
 
+## Failed runs
+
+A run that exits non-zero, or produces no parseable stream events, told you nothing. Both
+harnesses score such a run as **not passing in either arm**, and `eval/trigger.mjs` prints a
+warning and a banner in the report when any run fails.
+
+This matters more than it sounds. On a negative prompt the success condition is *nothing
+fired* — so scoring a failed run by its empty result would mean an outage reports a perfect
+false-fire rate. Verified by forcing every run to fail: the harness reports 0% and
+`!! 14/14 runs FAILED` rather than 100% silence.
+
+`eval/run.mjs` also validates every task's skill path before spending an API call. A renamed
+or misspelled skill otherwise makes each treatment run fail, and the report shows a large
+negative delta that reads as "this skill is harmful" rather than "this file is missing".
+
 ## Validating the judge
 
 A judge that passes everything produces a clean-looking null result. Before trusting one,

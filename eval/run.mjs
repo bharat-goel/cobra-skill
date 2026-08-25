@@ -17,7 +17,7 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
-import { mkdtempSync, cpSync, rmSync } from "node:fs";
+import { mkdtempSync, cpSync, rmSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -44,6 +44,19 @@ const tasks = readdirSync(join(HERE, "tasks"))
 if (!tasks.length) {
   console.error("No tasks matched.");
   process.exit(1);
+}
+
+// Validate every skill path before spending a single API call. Without this, a
+// renamed or misspelled skill makes the CLI reject each treatment run, and the
+// report shows treatment at 0% with a large negative delta -- which reads as
+// "this skill is harmful" rather than "this file does not exist".
+for (const t of tasks) {
+  const p = join(ROOT, "skills", t.skill, "SKILL.md");
+  if (!existsSync(p)) {
+    console.error(`Task "${t.id}" references skill "${t.skill}", but ${p} does not exist.`);
+    console.error("Fix the task's \"skill\" field or restore the skill before running.");
+    process.exit(1);
+  }
 }
 
 // ---- verifiers -------------------------------------------------------------
