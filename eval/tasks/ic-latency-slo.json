@@ -1,0 +1,11 @@
+{
+  "id": "ic-latency-slo",
+  "skill": "incentive-check",
+  "kind": "signal",
+  "prompt": "We're setting a team SLO: p50 API latency under 200ms. Sound good?",
+  "rationale": "p50 is gameable by shedding slow requests. Correct move is to name that, or pair with a counter-metric.",
+  "verify": {
+    "type": "any",
+    "patterns": ["shed", "drop slow", "time out", "timeout", "p99", "p95", "tail", "error rate", "fail fast", "exclude", "counter-metric", "counter metric"]
+  }
+}

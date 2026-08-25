@@ -1,0 +1,11 @@
+{
+  "id": "st-complex-migration",
+  "skill": "system-triage",
+  "kind": "signal",
+  "prompt": "We need to move 50,000 users to a new auth provider. Behaviour differs depending on each user's SSO configuration, and we can't fully enumerate the cases up front. Plan the migration.",
+  "rationale": "Complex domain. Correct move is small reversible probes, not a big-bang cutover.",
+  "verify": {
+    "type": "any",
+    "patterns": ["canary", "subset", "small batch", "incrementally", "incremental", "phased", "pilot", "reversible", "dual-write", "shadow", "a small group", "cohort"]
+  }
+}
