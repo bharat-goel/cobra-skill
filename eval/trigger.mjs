@@ -88,7 +88,7 @@ async function worker(q) {
     const failed = code !== 0 || events === 0;
     const fired = failed ? [] : allFired.filter((s) => OURS.includes(s));
     const ok = failed ? false : p.expect ? fired.includes(p.expect) : fired.length === 0;
-    recs.push({ i, rep, expect: p.expect, text: p.text, fired, code, events, failed, ok });
+    recs.push({ i, rep, expect: p.expect, hard: !!p.hard, text: p.text, fired, code, events, failed, ok });
     done++;
     process.stdout.write(`\r  ${done}/${jobs.length}`);
   }
@@ -117,13 +117,31 @@ for (const skill of OURS) {
   md += `\n`;
 }
 
+// Negatives split by difficulty. The off-topic ones establish only that the skill is
+// not always-on; a description that lists test, coverage, SLO, alert threshold and rate
+// limit is tested by the near-miss prompts, which name one of those and still want
+// execution or config rather than a judgement about the measure.
 const negs = recs.filter((r) => r.expect === null);
+const easyNegs = negs.filter((r) => !r.hard);
+const hardNegs = negs.filter((r) => r.hard);
 const clean = negs.filter((r) => r.ok).length;
-md += `## Negatives — should fire nothing\n\n**Silence: ${pct(clean, negs.length)}** (${clean}/${negs.length} runs clean)\n\n| Prompt | False fires |\n|---|---|\n`;
-for (const i of [...new Set(negs.map((r) => r.i))]) {
-  const rs = negs.filter((r) => r.i === i);
-  const bad = rs.filter((r) => !r.ok);
-  md += `| ${rs[0].text.slice(0, 78)} | ${bad.length}/${rs.length}${bad.length ? ` (${[...new Set(bad.flatMap((b) => b.fired))].join(", ")})` : ""} |\n`;
+md += `## Negatives — should fire nothing\n\n**Silence: ${pct(clean, negs.length)}** (${clean}/${negs.length} runs clean)\n\n`;
+const negTable = (rows) => {
+  let out = `| Prompt | False fires |\n|---|---|\n`;
+  for (const i of [...new Set(rows.map((r) => r.i))]) {
+    const rs = rows.filter((r) => r.i === i);
+    const bad = rs.filter((r) => !r.ok);
+    out += `| ${rs[0].text.slice(0, 78)} | ${bad.length}/${rs.length}${bad.length ? ` (${[...new Set(bad.flatMap((b) => b.fired))].join(", ")})` : ""} |\n`;
+  }
+  return out;
+};
+if (hardNegs.length) {
+  const ec = easyNegs.filter((r) => r.ok).length, hc = hardNegs.filter((r) => r.ok).length;
+  md += `### Off-topic — ${pct(ec, easyNegs.length)} silent (${ec}/${easyNegs.length})\n\n${negTable(easyNegs)}\n`;
+  md += `### Near-miss — ${pct(hc, hardNegs.length)} silent (${hc}/${hardNegs.length})\n\n`;
+  md += `Each names something in the description's trigger list but asks for execution, config or\ntooling rather than whether to adopt the measure. These are what test an over-broad description;\nthe off-topic prompts above cannot.\n\n${negTable(hardNegs)}\n`;
+} else {
+  md += negTable(negs);
 }
 md += `\nA false fire means the skill loaded on a prompt it has no business on, spending context and steering an unrelated answer.\n`;
 
@@ -135,6 +153,11 @@ for (const skill of OURS) {
   console.log(`${skill.padEnd(18)} recall ${pct(pos.filter((r) => r.ok).length, pos.length).padStart(4)}  (${pos.filter((r) => r.ok).length}/${pos.length})`);
 }
 console.log(`${"negatives".padEnd(18)} silent ${pct(clean, negs.length).padStart(4)}  (${clean}/${negs.length})`);
+if (hardNegs.length) {
+  const ec = easyNegs.filter((r) => r.ok).length, hc = hardNegs.filter((r) => r.ok).length;
+  console.log(`${"  off-topic".padEnd(18)} silent ${pct(ec, easyNegs.length).padStart(4)}  (${ec}/${easyNegs.length})`);
+  console.log(`${"  near-miss".padEnd(18)} silent ${pct(hc, hardNegs.length).padStart(4)}  (${hc}/${hardNegs.length})`);
+}
 if (failures.length)
   console.log(`\n!! ${failures.length}/${recs.length} runs FAILED — rates above are lower bounds, not measurements.`);
 console.log(`\nReport: eval/results/trigger-${STAMP}/report.md`);
