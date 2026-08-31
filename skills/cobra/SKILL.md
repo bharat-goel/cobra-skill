@@ -15,6 +15,10 @@ This is not cynicism about people. It is a structural property of measured syste
 
 > **Goodhart's Law:** when a measure becomes a target, it ceases to be a good measure.
 
+Apply this hardest to **safeguards** — backups, rollbacks, health checks, dry-run paths. They are
+the class where the reading is binary, the reward is immediate, and the damage lands at the one
+moment you cannot afford it. If the thing in front of you is a safeguard, read that section first.
+
 ## The three questions
 
 Ask these **before** adopting any measure, not after it disappoints.
@@ -61,7 +65,7 @@ Pick one cheap, hard-to-fake detail that correlates with the whole job being don
 - Do the small conventions hold — naming, error handling, import order? If those slipped, the larger contract was probably not read either.
 - Does the change include the unglamorous parts — the migration, the changeset, the docs, the rollback path?
 
-### Safeguards are the worst case
+## Safeguards are the worst case
 
 A backup, a rollback path, a health check, a circuit breaker, a dry-run flag — these are measures
 too, and the hardest kind. The reading is binary (*it ran*), the reward is immediate (*a success
@@ -75,6 +79,54 @@ restored from is a hypothesis, not a backup.*
 Watch especially for a safeguard that **shares state with the thing it protects** — same directory,
 same naming scheme, same sort order. That is where a safety mechanism quietly begins consuming what
 it was built to preserve, while still reporting success.
+
+## What a cobra check produces
+
+Five fields. Keep it to a few lines each — this is a check, not a report.
+
+| Field | What goes in it |
+|---|---|
+| **Measure** | The rule as actually written, not as intended |
+| **Gaming path** | The cheapest way to satisfy it without achieving the goal |
+| **Delay** | When the damage arrives relative to the reward |
+| **Canary** | One cheap observable that reveals whether the real thing was done |
+| **Verdict** | Survives, or replace it — and if replace, with what |
+
+**A measure survives when the cheapest path to satisfying it costs more than doing the work.**
+That is the exit condition. Failing to think of a gaming path is not the same thing, and is
+available to anyone who does not want to look. For safeguards the test is stricter still: you
+do not get to clear one by inspection, only by running it against a case it should catch.
+
+### Worked example — a measure that fails
+
+> "Every PR must get a review within 24 hours."
+
+- **Measure:** time from PR opened to any approval, per PR.
+- **Gaming path:** approve without reading. "LGTM" at hour 23 satisfies it completely, costs
+  thirty seconds, and is indistinguishable in the data from a careful review.
+- **Delay:** the reward is immediate and the damage is not. Defects wave through today and
+  surface in production weeks later, by which time nothing attributes them to that approval.
+- **Canary:** do the review comments reference specific lines and specific behaviour? A reviewer
+  who read the diff leaves evidence that they read the diff. This is hard to fake at volume.
+- **Verdict:** replace. Measure review depth or defect escape rate, not turnaround — or pair the
+  24-hour target with a counter-metric so speed cannot be bought with attention.
+
+### Worked example — a measure that survives
+
+> "A release is done when someone has completed a real customer transaction end-to-end in
+> production."
+
+- **Measure:** one verified real transaction per release.
+- **Gaming path:** none that is cheap. Faking it means producing a genuine transaction record,
+  which means performing the transaction. The cost of satisfying the measure dishonestly is
+  roughly the cost of satisfying it honestly.
+- **Delay:** none. The check fires on the same timescale as the action it certifies.
+- **Canary:** the transaction ID exists in the production ledger and reconciles.
+- **Verdict:** survives. This is an outcome measure, not an activity measure, and it is expensive
+  to fake — the two properties that matter. Adopt it.
+
+Not every measure is broken. Saying so, and saying why, is a valid result of this check — a
+report that never clears anything is not vigilance, it is the same failure with the sign flipped.
 
 ## Designing a measure that survives contact
 

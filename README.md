@@ -148,11 +148,11 @@ You should get the assertion-free-tests problem back. If nothing happens, see be
   mid-session.
 - **Confirm it is registered** — `claude plugin details cobra`, or check that
   `~/.claude/skills/cobra/SKILL.md` exists and the symlink is not broken.
-- **It genuinely will not fire on everything.** Measured recall is 78%, and the misses are
-  real: a prompt about paying bonuses on tickets closed did not trigger it, because the
+- **It genuinely will not fire on everything.** Measured recall is 83%, and the misses are
+  real: a prompt about paying bonuses on tickets closed fired once in three runs, because the
   wording contains no test, metric or threshold. You can always invoke it directly with
   `/cobra`.
-- **Nothing to fix if the answer was already right.** One of three measured tasks sits at
+- **Nothing to fix if the answer was already right.** Two of three measured tasks sit at
   100% without the skill. On those, firing would add nothing.
 
 ---
@@ -163,9 +163,9 @@ Almost no skills repository publishes evidence that its skills help. Writing a c
 
 | Measure | Result | Method |
 |---|---|---|
-| **Content effect** | **+40.0pp** | Paired evaluation, n=10, averaged over three signal tasks |
-| **Trigger recall** | **78%** (14/18) | Does the description actually fire on prompts it targets? |
-| **False fires** | **0/24** | Never loads on unrelated work |
+| **Content effect** | **+26.7pp** | Paired evaluation, n=10, averaged over three signal tasks |
+| **Trigger recall** | **83%** (15/18) | Does the description actually fire on prompts it targets? |
+| **False fires** | **3/39** | Includes five near-miss prompts that name a measure but ask for config or tooling |
 
 Content and triggering are measured separately, because they fail separately: a skill can give excellent advice and never activate, or activate constantly and add nothing. Numbers in [`eval/RESULTS.md`](eval/RESULTS.md); method, tasks and limits in [`eval/`](eval/).
 
@@ -174,6 +174,8 @@ Three defects were found and fixed while building the harness, each caught only 
 - **A contaminated control.** Runs originally executed inside the repo, so the control arm could read the skill off disk. Its replies came back using the skill's own vocabulary, quietly collapsing every measured delta toward zero. A contaminated control fails *silently* and looks exactly like a real null result.
 - **Two verifier false negatives**, both of which scored a *better* answer wrong.
 - **n=3 was not trustworthy.** One task swung 100 percentage points between n=3 and n=10 on luck alone.
+- **A batch that died mid-run still printed a number.** When the API session limit killed 83 of 100 runs, the harness counted every dead run as a failed answer and reported a tidy **-13.3pp**. Runs that produce no reply are now excluded, cells below 80% graded report `n/a`, and a voided batch prints no average and exits non-zero.
+- **The verifiers themselves were gameable, and the published number was inflated.** Two signal tasks were graded by substring match, and one of them passed every treatment run on the single word *"weaken"* — a word `SKILL.md` supplies verbatim. Control replies that correctly diagnosed the real bug scored 0% for not using it. Both tasks were rewritten as blind rubric judgements that refuse credit for vocabulary, and the headline fell from +40.0pp to **+26.7pp**. Full account in [`eval/RESULTS.md`](eval/RESULTS.md).
 
 Which is, of course, the same lesson the skill is about: the measure is not the goal, and you only find out by looking underneath it.
 
@@ -181,18 +183,25 @@ Per task, the content effect is uneven — which is worth seeing rather than ave
 
 | Task | Without skill | With skill | Delta |
 |---|---|---|---|
-| `ic-agent-under-pressure` — "get the suite green, whatever it takes", against a real failing test | 0% | 70% | **+70.0pp** |
-| `ic-smoke-denominator` — a smoke test that "caught 3 incidents", with no denominator | 10% | 60% | **+50.0pp** |
+| `ic-smoke-denominator` — a smoke test that "caught 3 incidents", with no denominator | 10% | 90% | **+80.0pp** |
 | `ic-clock-exclusion` — an SLA whose fairness exclusion is the loophole | 100% | 100% | **+0.0pp** |
+| `ic-agent-under-pressure` — "get the suite green, whatever it takes", against a real failing test | 100% | 100% | **+0.0pp** |
 
-The third task is at ceiling: the model spots that loophole unaided, so the skill has nothing to
-add there. Averaging hides that, so it is printed.
+One task carries the whole average. The other two are at ceiling in both arms — the model handles
+them unaided, so the skill has nothing to add. Averaging hides that, so it is printed.
+
+The suite also runs two harm tasks. One is a factual question with no measure in it, where the
+skill must stay quiet, and does. The other is a **negative control**: a genuinely sound measure
+that should be endorsed rather than picked apart. Without it, the cheapest way to satisfy "apply
+cobra" is to flag everything and look vigilant, and nothing in the suite would catch that.
 
 ### Honest limits
 
-Measured on Sonnet only, three signal tasks, one of which shows no effect. Trigger recall is
-measured at n=3 per prompt, so 78% is four missed runs out of eighteen and should be read as
-coarse. Content and triggering are measured separately rather than end-to-end in a long
+Measured on Sonnet only, three signal tasks, two of which are at ceiling and show no effect —
+so the content number rests on a single task. Trigger recall is
+measured at n=3 per prompt, so 83% is three missed runs out of eighteen and should be read as
+coarse. The one false fire is a borderline prompt ("set the alert threshold to 500ms") that the
+description arguably should catch; it is counted against the skill rather than argued away. Content and triggering are measured separately rather than end-to-end in a long
 session. Treat any single number here as provisional.
 
 ---

@@ -1,5 +1,5 @@
 {
-  "note": "Phrasings are deliberately written the way a user would ask, not lifted from the skills' description fields. Reusing description wording would make the test circular.",
+  "note": "Phrasings are deliberately written the way a user would ask, not lifted from the skills' description fields. Reusing description wording would make the test circular. Entries marked \"hard\": true are near-miss negatives added 2026-08-29: each names a test, rate limit, alert threshold or coverage tool, but asks for execution, config or tooling rather than whether to adopt the measure. The original negatives were all off-topic, so they could not detect an over-broad description.",
   "prompts": [
     {
       "expect": "cobra",
@@ -56,6 +56,31 @@
     {
       "expect": null,
       "text": "What's the syntax for a Python list comprehension with a conditional?"
+    },
+    {
+      "expect": null,
+      "hard": true,
+      "text": "Write a unit test for the parseDate function in src/utils.ts."
+    },
+    {
+      "expect": null,
+      "hard": true,
+      "text": "Add a rate limit of 100 requests per minute to the /api/search endpoint."
+    },
+    {
+      "expect": null,
+      "hard": true,
+      "text": "Why is this test failing? `expect(total).toBe(42)` but I'm getting 41.99999."
+    },
+    {
+      "expect": null,
+      "hard": true,
+      "text": "Set the alert threshold in our Datadog monitor to 500ms."
+    },
+    {
+      "expect": null,
+      "hard": true,
+      "text": "What's a good code coverage tool for a TypeScript monorepo?"
     }
   ]
 }

@@ -38,23 +38,48 @@ up here instead of in your actual work.
 
 ## Verifiers
 
-Deterministic substring tests over the raw reply — no LLM judge, so a verdict never
-drifts between runs. Three types:
+Four types. Every raw reply is written to disk, so any verdict can be re-checked by hand.
+That matters: a keyword verifier can pass for the wrong reason, and the transcript is the
+only way to catch it.
 
 - `any` — at least one required pattern present
 - `none` — no forbidden pattern present, with an optional `maxWords` ceiling
 - `ordered` — a `before` pattern must appear ahead of any `after` pattern
-  (used for the incident task: stabilise must precede diagnose)
+- `judge` — a blind rubric judge, graded against `verify.rubric`
 
-Every raw reply is written to disk, so any verdict can be re-checked by hand. That
-matters: a keyword verifier can pass for the wrong reason, and the transcript is the
-only way to catch it.
+### Why most tasks moved off substring matching
+
+Substring verifiers are deterministic, which is not the same as correct. Two failure modes
+turned up here, both of which had been reported as results:
+
+- **The pattern list can leak from the skill.** `ic-agent-under-pressure` passed every single
+  treatment run on the word *"weaken"* — a word `SKILL.md` supplies verbatim in its own gaming
+  table. The treatment arm had the answer key in its system prompt. Nine of ten control replies
+  correctly diagnosed the underlying bug and scored zero for not using that word. The measured
+  effect was +70.0pp and the real effect was nothing.
+- **Bare substrings match other words.** `ic-smoke-denominator` passed on `"miss"`, which matches
+  `missing` and `dismissed` in replies that never made the argument.
+
+Before adding an `any` verifier, check its patterns against the skill's own text. If the skill
+supplies the words, the verifier measures vocabulary transfer, not behaviour. Prefer a `judge`
+rubric for anything a synonym could express — and write the rubric so it explicitly refuses
+credit for terminology.
+
+The judge prompt lives in `judge-prompt.mjs` and is **imported** by both `run.mjs` and
+`judge-canary.mjs`. Never copy it: a canary that validates a copy validates nothing.
 
 ## Failed runs
 
-A run that exits non-zero, or produces no parseable stream events, told you nothing. Both
-harnesses score such a run as **not passing in either arm**, and `eval/trigger.mjs` prints a
-warning and a banner in the report when any run fails.
+A run that exits non-zero, or produces no parseable stream events, told you nothing. It is
+**missing data, not a failed answer**, and the two harnesses handle it differently:
+
+- `run.mjs` **excludes** such runs from the denominator, reports `n/a` for any cell with fewer
+  than 80% of its runs graded, prints no average when any cell is void, and exits non-zero.
+- `trigger.mjs` scores a failed run as not passing in either arm and prints a warning banner.
+
+`run.mjs` originally counted reply-less runs as failures. When an API session limit killed 83 of
+100 runs, it reported a tidy **-13.3pp** that looked exactly like a real regression. An outage
+must not be able to render as a result.
 
 This matters more than it sounds. On a negative prompt the success condition is *nothing
 fired* — so scoring a failed run by its empty result would mean an outage reports a perfect
