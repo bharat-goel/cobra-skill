@@ -19,6 +19,7 @@ import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { mkdtempSync, cpSync, rmSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { judgePrompt, parseVerdict } from "./judge-prompt.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
@@ -96,44 +97,22 @@ const firstUnnegated = (hay, pats, window = 45) => {
 // moves ("treat these as different kinds of problem") have too many valid phrasings
 // for a pattern list: correct replies were being scored wrong for saying "different
 // problems" instead of "three different problems", or "read replica" instead of
-// "read-only".
+// "read-only". The cobra signal tasks moved here for the same reason -- the pattern
+// list was passing treatment on the single word "weaken", which SKILL.md supplies.
 //
 // The judge is never told which arm produced the reply, and never sees the skill.
 // Without that, it would reward replies that sound like the skill rather than
 // replies that do the right thing -- which would inflate every number here.
-function judgePrompt(task, reply) {
-  return [
-    "You are grading one reply against a rubric. You do not know how it was produced.",
-    "",
-    "=== QUESTION THE REPLY WAS ANSWERING ===",
-    task.prompt,
-    "",
-    "=== RUBRIC ===",
-    task.verify.rubric,
-    "",
-    "=== REPLY TO GRADE ===",
-    reply,
-    "",
-    "=== INSTRUCTIONS ===",
-    "Judge only against the rubric. Do not reward or penalise vocabulary, framework",
-    "names, formatting, or confidence. A reply that does the right thing in plain",
-    "words passes; a reply that uses impressive terminology without doing it fails.",
-    "Output exactly two lines:",
-    "VERDICT: PASS or FAIL",
-    "REASON: one sentence",
-  ].join("\n");
-}
+//
+// The prompt itself lives in judge-prompt.mjs and is imported, not copied, so that
+// judge-canary.mjs validates the judge this file actually runs.
 
 async function runJudge(task, reply) {
   const { out, code } = await runClaude(judgePrompt(task, reply), null, SANDBOX, JUDGE_MODEL);
   if (code !== 0 || !out) return { pass: false, why: "judge failed to run" };
-  const verdict = /VERDICT:\s*(PASS|FAIL)/i.exec(out);
-  const reason = /REASON:\s*(.+)/i.exec(out);
-  if (!verdict) return { pass: false, why: "judge returned no verdict" };
-  return {
-    pass: verdict[1].toUpperCase() === "PASS",
-    why: `judge: ${(reason?.[1] ?? "").trim().slice(0, 110)}`,
-  };
+  const v = parseVerdict(out);
+  if (!v) return { pass: false, why: "judge returned no verdict" };
+  return { pass: v.pass, why: `judge: ${v.why}` };
 }
 
 function verify(spec, output) {
@@ -230,10 +209,10 @@ async function worker(queue) {
     const name = `${t.id}__${cond}__${rep}`;
     writeFileSync(join(OUT, "raw", `${name}.txt`), out || `<<no output>>\n${err}`);
     let v;
-    if (code !== 0 || !out) v = { pass: false, why: `run failed (exit ${code})` };
+    if (code !== 0 || !out) v = { pass: false, failed: true, why: `run failed (exit ${code}): ${(out || err).slice(0, 80)}` };
     else if (t.verify.type === "judge") v = await runJudge(t, out);
     else v = verify(t.verify, out);
-    records.push({ task: t.id, skill: t.skill, kind: t.kind, method: t.verify.type === "judge" ? "judge" : "pattern", cond, rep, pass: v.pass, why: v.why });
+    records.push({ task: t.id, skill: t.skill, kind: t.kind, method: t.verify.type === "judge" ? "judge" : "pattern", cond, rep, pass: v.pass, failed: !!v.failed, why: v.why });
     done++;
     process.stdout.write(`\r  ${done}/${jobs.length}  ${v.pass ? "PASS" : "FAIL"}  ${name.padEnd(42)}`);
   }
@@ -245,10 +224,16 @@ process.stdout.write("\n\n");
 
 // ---- aggregate -------------------------------------------------------------
 
+const MIN_GRADED = Math.max(3, Math.ceil(REPS * 0.8));
+
 const rate = (task, cond) => {
-  const rs = records.filter((r) => r.task === task && r.cond === cond);
-  return rs.length ? (rs.filter((r) => r.pass).length / rs.length) * 100 : NaN;
+  const rs = records.filter((r) => r.task === task && r.cond === cond && !r.failed);
+  return rs.length >= MIN_GRADED ? (rs.filter((r) => r.pass).length / rs.length) * 100 : NaN;
 };
+
+const failures = records.filter((r) => r.failed);
+const voided = tasks.some((t) =>
+  ["control", "treatment"].some((c) => Number.isNaN(rate(t.id, c))));
 
 const rows = tasks.map((t) => {
   const c = rate(t.id, "control"), x = rate(t.id, "treatment");
@@ -271,7 +256,9 @@ md += `Both use \`--setting-sources project\` and run in an empty directory outs
 md += `## Signal tasks — does the skill change the answer?\n\n`;
 md += `| Task | Skill | Control | With skill | Delta |\n|---|---|---|---|---|\n`;
 for (const r of signal) md += `| \`${r.id}\` | ${r.skill} | ${pct(r.control)} | ${pct(r.treatment)} | **${dpp(r.delta)}** |\n`;
-md += `\n**Average delta across signal tasks: ${dpp(overall)}**\n\n`;
+md += voided
+  ? `\n**BATCH VOID** — ${failures.length}/${records.length} runs produced no reply, leaving at least one cell below ${MIN_GRADED} graded runs of ${REPS}. No average is reported.\n\n`
+  : `\n**Average delta across signal tasks: ${dpp(overall)}**\n\n`;
 md += `## Harm tasks — does the skill stay quiet where it should?\n\n`;
 md += `| Task | Skill | Control | With skill | Delta |\n|---|---|---|---|---|\n`;
 for (const r of harm) md += `| \`${r.id}\` | ${r.skill} | ${pct(r.control)} | ${pct(r.treatment)} | ${dpp(r.delta)} |\n`;
@@ -289,5 +276,15 @@ writeFileSync(join(OUT, "summary.json"), JSON.stringify({ stamp: STAMP, model: M
 console.log(`${pad("TASK", 24)} ${pad("KIND", 7)} CTRL  SKILL  DELTA`);
 for (const r of [...signal, ...harm])
   console.log(`${pad(r.id, 24)} ${pad(r.kind, 7)} ${pct(r.control)}  ${pct(r.treatment)}  ${dpp(r.delta)}`);
-console.log(`\nAverage delta across signal tasks: ${dpp(overall)}`);
+if (failures.length) {
+  console.log(`\n!! ${failures.length}/${records.length} runs produced no reply and were excluded, not counted as failures.`);
+  console.log(`!! First: ${failures[0].why}`);
+}
+if (voided) {
+  console.log(`\n**  BATCH VOID  ** at least one cell has fewer than ${MIN_GRADED} graded runs of ${REPS}.`);
+  console.log("**  No average printed. Re-run before believing anything here.");
+} else {
+  console.log(`\nAverage delta across signal tasks: ${dpp(overall)}`);
+}
 console.log(`Report: eval/results/${STAMP}/report.md`);
+if (voided) process.exit(1);
