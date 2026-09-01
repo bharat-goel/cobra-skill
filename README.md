@@ -128,6 +128,30 @@ curl -sL https://raw.githubusercontent.com/bharat-goel/cobra-skill/main/skills/c
   -o ~/.claude/skills/cobra/SKILL.md
 ```
 
+### Updating
+
+If you installed via the plugin system, a new release does not arrive on its own — pull the
+marketplace, then update:
+
+```bash
+claude plugin marketplace update cobra-skill
+claude plugin update cobra
+```
+
+Restart Claude Code, then check the version:
+
+```bash
+claude plugin details cobra
+```
+
+`1.1.0` or later has the rewritten evaluation and the revised skill body — see
+[CHANGELOG.md](CHANGELOG.md). If it still reports `1.0.0`, the marketplace cache is stale; remove
+and re-add it with `claude plugin marketplace remove cobra-skill` followed by the add command
+above.
+
+If you installed by symlink (Option 2), `git pull` is the whole update. If you copied the file
+(Option 3), re-run the `curl`.
+
 ### Scope
 
 `~/.claude/skills/` installs for **you**, everywhere. To install for one project instead —

@@ -2,7 +2,7 @@
 name: cobra
 description: "Check what a measure actually rewards before adopting it, and whether it can be satisfied without achieving the goal. Use when defining or changing a test, eval, benchmark, acceptance criterion, coverage target, KPI, SLO, alert threshold, rate limit, quota, lint rule, agent success condition, or any rule that rewards a measured outcome. Also use when writing or reviewing a safeguard whose success is reported rather than verified — a backup, restore, rollback, retention/prune policy, health check, or dry-run path. Also when a metric is improving but the underlying goal is not, when a test suite is green but behavior is wrong, or when deciding how to verify that work is actually done."
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   adapted-from: "Sandeep Swadia, 'How To Think SO Clearly People Assume You're Brilliant' (YouTube, 2026)"
   based-on: "Cobra effect (Horst Siebert, 2001); Goodhart's Law; Campbell's Law. See references/attribution.md"
 ---
