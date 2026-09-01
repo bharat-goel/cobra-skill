@@ -1,7 +1,7 @@
 {
   "name": "cobra",
   "description": "Finds the cheapest way a measure can be satisfied without achieving its goal. Measured: +26.7pp on the tasks it targets, 83% trigger recall, 3 false fires in 39 negative runs.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": { "name": "Bharat Goel" },
   "homepage": "https://github.com/bharat-goel/cobra-skill",
   "license": "MIT",
