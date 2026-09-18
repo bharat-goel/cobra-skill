@@ -141,3 +141,16 @@ That paper measured +16.2pp for curated skills across 86 tasks, with wide varian
 domain and 16 of 84 tasks showing negative deltas. It also found 2–3 skills optimal and
 4+ sharply worse, and that self-generated skills gave no benefit at all — the result
 this repository is most exposed to, since a model drafted these skills.
+
+## Ported to nullbench
+
+This suite is the worked example for **[nullbench](https://github.com/bharat-goel/nullbench)**,
+a pre-registration protocol built out of the failures recorded here. The port lives at
+`examples/cobra/` there: the same five tasks and the same judge canaries, declared in a
+hashed registration before the run, so a report states up front whether it ran what was
+registered.
+
+The harness in this directory still works and is what produced every number in
+`RESULTS.md`. nullbench is the same experiment under a stricter protocol — notably it
+declines to print a suite average when most of the tasks feeding it do not discriminate,
+which is the caveat `RESULTS.md` currently has to make in prose.
