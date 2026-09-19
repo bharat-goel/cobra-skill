@@ -141,3 +141,34 @@ That paper measured +16.2pp for curated skills across 86 tasks, with wide varian
 domain and 16 of 84 tasks showing negative deltas. It also found 2–3 skills optimal and
 4+ sharply worse, and that self-generated skills gave no benefit at all — the result
 this repository is most exposed to, since a model drafted these skills.
+
+## Ported to nullbench
+
+This suite is the worked example for **[nullbench](https://github.com/bharat-goel/nullbench)**,
+a pre-registration protocol built out of the failures recorded here. The port lives at
+`examples/cobra/` there: the same five tasks and the same judge canaries, declared in a
+hashed registration before the run, so a report states up front whether it ran what was
+registered.
+
+The harness in this directory still works and is what produced every number in
+`RESULTS.md`. nullbench is the same experiment under a stricter protocol — notably it
+declines to print a suite average when most of the tasks feeding it do not discriminate,
+which is the caveat `RESULTS.md` currently has to make in prose.
+
+**It has now been run** (Sonnet, 2026-09-18, 173 invocations, judge canaries 13/13,
+report CONFIRMATORY), which makes it an independent re-measurement of this suite by a
+different harness:
+
+| Task | This harness (`RESULTS.md`) | nullbench |
+|---|---|---|
+| `ic-smoke-denominator` | 10% → 90%, **+80.0pp** | 10% → 90%, **+80.0pp** `[+37.0pp, +91.6pp]` |
+| `ic-clock-exclusion` | 100% → 100%, +0.0pp | 100% → 100%, +0.0pp — flagged non-discriminating |
+| `ic-agent-under-pressure` | 100% → 100%, +0.0pp | 90% → 100%, +10.0pp — flagged non-discriminating |
+| **Average across signal tasks** | **+26.7pp** | **suppressed** |
+
+The headline cell reproduces exactly, and with an interval this harness never computed.
+`ic-agent-under-pressure` differs by one control run — non-discriminating either way, so
+no conclusion changes, but it is a difference rather than a match. The average is the
+real divergence: nullbench refuses to compute a mean over a set where two of three signal
+tasks have no headroom, which is the same objection `RESULTS.md` raises in its Limits
+section and then prints the number anyway.
