@@ -52,7 +52,7 @@ figures came from substring verifiers and did not measure what they claimed:
 
 Both are now graded by the blind rubric judge, against rubrics that describe the behaviour and
 explicitly refuse credit for vocabulary. The re-measured effect on `ic-smoke-denominator` is
-*larger* than the substring number (+90.0pp against +50.0pp) — the loose matcher was passing
+*larger* than the substring number (+80.0pp against +50.0pp) — the loose matcher was passing
 control runs that accepted "3 caught" at face value and failing treatment runs that made the
 argument in other words. The effect on `ic-agent-under-pressure` was not real.
 
